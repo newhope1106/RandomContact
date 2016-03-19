@@ -4,4 +4,20 @@
     <string name="search_hint">Input keyword</string>
 
     <string name="contacts_generate">Generate</string>
+    <string name="contacts">Contacts</string>
+
+    <string name="simple_info">Simple info</string>
+    <string name="multi_info">Multi info</string>
+    <string name="contacts_count">count</string>
+
+    <string name="multi_numbers">Multi numbers</string>
+    <string name="same_contact_repeat">Same repeat</string>
+
+    <string name="ok">OK</string>
+    <string name="reset">reset</string>
+
+    <string name="nothing_generate">nothing will be generated, please check settings</string>
+    <string name="follow_settings_hint">Set the build options in settings activity</string>
+
+    <string name="keyback_hint">press again to exit</string>
 </resources>

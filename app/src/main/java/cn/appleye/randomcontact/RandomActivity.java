@@ -1,52 +1,38 @@
 package cn.appleye.randomcontact;
 
-import android.app.LoaderManager;
-import android.content.CursorLoader;
-import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.view.ViewGroup;
 
-import cn.appleye.randomcontact.common.ListAdapter;
+import cn.appleye.randomcontact.common.list.TabState;
+import cn.appleye.randomcontact.common.list.ViewPagerTabs;
 
-public class RandomActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class RandomActivity extends AppCompatActivity{
 
-    private EditText mSearchView;
-    private ListView mListView;
-    private ListAdapter mAdapter;
-    private View mCreateContactsView;
-    private View mContainerView;
+    private ViewPagerTabs mViewPagerTabs;
+    private String[] mTabTitles;
+    private ViewPager mTabPager;
+    private TabPagerAdapter mTabPagerAdapter;
+    private TabPagerListener mTabPagerListener = new TabPagerListener();
 
-    private String mLastQueryString = "";
-    private static final int LOADER_ID = 1;
-
+    private ContactsFragment mContactsFragment;
+    private GenerateFragment mGenerateFragement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_random);
-
-        mSearchView = (EditText)findViewById(R.id.search_view);
-
-        mAdapter = new ListAdapter(this);
-        mListView = (ListView)findViewById(R.id.list_view);
-        mCreateContactsView = findViewById(R.id.generate_contacts);
-        mContainerView = findViewById(R.id.container_view);
-        mListView.setEmptyView(mCreateContactsView);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,77 +46,40 @@ public class RandomActivity extends AppCompatActivity implements LoaderManager.L
             }
         });
 
-        setupSearchView();
-        setupListView();
+        mViewPagerTabs = (ViewPagerTabs)findViewById(R.id.lists_pager_header);
 
-        startLoading();
-    }
+        mTabTitles = new String[TabState.COUNT];
+        mTabTitles[TabState.CONTACTS] = getString(R.string.contacts);
+        mTabTitles[TabState.GENERATE] = getString(R.string.contacts_generate);
 
-    private void setupSearchView() {
-        mSearchView.addTextChangedListener(new TextWatcher() {
+        mTabPagerAdapter = new TabPagerAdapter();
+        mTabPager = (ViewPager)findViewById(R.id.tab_pager);
+        mTabPager.setAdapter(mTabPagerAdapter);
+        mTabPager.setOnPageChangeListener(mTabPagerListener);
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
+        mViewPagerTabs.setViewPager(mTabPager);
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        final FragmentManager fragmentManager = getFragmentManager();
+        final FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-            }
+        mContactsFragment = new ContactsFragment();
+        mGenerateFragement = new GenerateFragment();
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                startQuery();
-            }
-        });
-    }
+        final String CONTACTS_TAG = "tab-pager-contacts";
+        final String GENERATE_TAG = "tab-pager-generate";
 
-    private void setupListView() {
-        mListView.setAdapter(mAdapter);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Uri uri = (Uri)mAdapter.getItem(position);
+        transaction.add(R.id.tab_pager, mContactsFragment, CONTACTS_TAG);
+        transaction.add(R.id.tab_pager, mGenerateFragement, GENERATE_TAG);
 
-                if (uri != null) {
-                    final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
-                }
-            }
-        });
-    }
+        transaction.hide(mContactsFragment);
+        transaction.hide(mGenerateFragement);
 
-    private void startLoading() {
-        getLoaderManager().initLoader(LOADER_ID, null, this);
-    }
-
-    private void startQuery() {
-        String queryString = mSearchView.getText().toString();
-        mAdapter.setQueryString(queryString);
-
-        if ((mLastQueryString==null && queryString == mLastQueryString) || queryString.equals(mLastQueryString)) {
-
-        } else {
-            getLoaderManager().restartLoader(LOADER_ID, null, this);
-        }
-
-        mLastQueryString = queryString;
-    }
-
-    private CursorLoader createCursorLoader() {
-        return new CursorLoader(this, null, null, null, null, null);
+        transaction.commitAllowingStateLoss();
+        fragmentManager.executePendingTransactions();
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args){
-        CursorLoader cursorLoader = createCursorLoader();
-        mAdapter.configureLoader(cursorLoader);
-
-        return cursorLoader;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_random, menu);
         return true;
@@ -151,19 +100,141 @@ public class RandomActivity extends AppCompatActivity implements LoaderManager.L
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data){
-        mAdapter.changeCursor(data);
 
-        if (!mAdapter.isSearchMode() && (data ==null || data.getCount() == 0)) {
-            mContainerView.setVisibility(View.GONE);
-        } else {
-            mContainerView.setVisibility(View.VISIBLE);
+    private class TabPagerAdapter extends PagerAdapter {
+        private final FragmentManager mFragmentManager;
+        private FragmentTransaction mCurTransaction = null;
+
+        private boolean mAreTabsHiddenInTabPager;
+
+        private Fragment mCurrentPrimaryItem;
+
+        public TabPagerAdapter() {
+            mFragmentManager = getFragmentManager();
+        }
+
+        public boolean areTabsHidden() {
+            return mAreTabsHiddenInTabPager;
+        }
+
+        public void setTabsHidden(boolean hideTabs) {
+            if (hideTabs == mAreTabsHiddenInTabPager) {
+                return;
+            }
+            mAreTabsHiddenInTabPager = hideTabs;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public int getCount() {
+            return mAreTabsHiddenInTabPager ? 1 : TabState.COUNT;
+        }
+
+        /** Gets called when the number of items changes. */
+        @Override
+        public int getItemPosition(Object object) {
+            if (object == mContactsFragment) {
+                return TabState.CONTACTS;
+            } else if (object == mGenerateFragement) {
+                 return TabState.GENERATE;
+            }
+
+            return TabState.CONTACTS;
+        }
+
+        @Override
+        public void startUpdate(ViewGroup container) {
+        }
+
+        private Fragment getFragment(int position) {
+            if (position == TabState.CONTACTS) {
+                return mContactsFragment;
+            } else if (position == TabState.GENERATE) {
+                return mGenerateFragement;
+            }
+
+            throw new IllegalArgumentException("position: " + position);
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            if (mCurTransaction == null) {
+                mCurTransaction = mFragmentManager.beginTransaction();
+            }
+            Fragment f = getFragment(position);
+            mCurTransaction.show(f);
+
+            // Non primary pages are not visible.
+            f.setUserVisibleHint(f == mCurrentPrimaryItem);
+            return f;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            if (mCurTransaction == null) {
+                mCurTransaction = mFragmentManager.beginTransaction();
+            }
+            mCurTransaction.hide((Fragment) object);
+        }
+
+        @Override
+        public void finishUpdate(ViewGroup container) {
+            if (mCurTransaction != null) {
+                mCurTransaction.commitAllowingStateLoss();
+                mCurTransaction = null;
+                mFragmentManager.executePendingTransactions();
+            }
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return ((Fragment) object).getView() == view;
+        }
+
+        @Override
+        public void setPrimaryItem(ViewGroup container, int position, Object object) {
+            Fragment fragment = (Fragment) object;
+            if (mCurrentPrimaryItem != fragment) {
+                if (mCurrentPrimaryItem != null) {
+                    mCurrentPrimaryItem.setUserVisibleHint(false);
+                }
+                if (fragment != null) {
+                    fragment.setUserVisibleHint(true);
+                }
+                mCurrentPrimaryItem = fragment;
+            }
+        }
+
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mTabTitles[position];
         }
     }
 
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+    private class TabPagerListener implements ViewPager.OnPageChangeListener {
+        TabPagerListener() {}
 
+        @Override
+        public void onPageScrollStateChanged(int state) {
+            if (!mTabPagerAdapter.areTabsHidden()) {
+                mViewPagerTabs.onPageScrollStateChanged(state);
+            }
+        }
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            if (!mTabPagerAdapter.areTabsHidden()) {
+                mViewPagerTabs.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            // Make sure not in the search mode, in which case position != TabState.ordinal().
+            if (!mTabPagerAdapter.areTabsHidden()) {
+                mViewPagerTabs.onPageSelected(position);
+            }
+        }
     }
 }

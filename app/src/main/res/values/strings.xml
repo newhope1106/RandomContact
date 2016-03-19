@@ -20,4 +20,28 @@
     <string name="follow_settings_hint">Set the build options in settings activity</string>
 
     <string name="keyback_hint">press again to exit</string>
+
+    <string name="toast_empty_counts">empty count not allowed</string>
+    <string name="toast_invalid_number">invalid number</string>
+
+    <string name="loading_dialog_title">generating</string>
+    <string name="loading_dialog_message">please wait.......</string>
+
+    <string name="message_generate_finish">finish</string>
+    <string name="message_generate_cancel">cancel</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="generate_display_name">generate display name</string>
+    <string name="generate_nick_name">generate nick name</string>
+    <string name="generate_phone_number">generate phone number</string>
+    <string name="generate_event_number">generate event</string>
+    <string name="generate_email">generate email</string>
+    <string name="generate_postal">generate postal</string>
+    <string name="generate_im">generate IM</string>
+    <string name="generate_org">generate organization</string>
+    <string name="generate_photo">generate photo</string>
+    <string name="generate_note">generate note</string>
+    <string name="generate_web_site">generate web site</string>
+    <string name="save_success">save success</string>
+    <string name="save_settings">save settings</string>
 </resources>

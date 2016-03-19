@@ -2,5 +2,47 @@
 <resources>
     <string name="action_settings">设置</string>
     <string name="search_hint">搜索关键字</string>
+
     <string name="contacts_generate">生成联系人</string>
+    <string name="contacts">联系人</string>
+
+    <string name="simple_info">简单信息</string>
+    <string name="multi_info">复杂信息</string>
+    <string name="contacts_count">个数</string>
+
+    <string name="multi_numbers">多个号码</string>
+    <string name="same_contact_repeat">完全相同联系人</string>
+
+    <string name="ok">确定</string>
+    <string name="reset">重置</string>
+
+    <string name="nothing_generate">没有什么要生成的，请检查设置信息</string>
+    <string name="follow_settings_hint">设置界面可以设定生成选项</string>
+
+    <string name="keyback_hint">再按一次退出程序</string>
+
+    <string name="toast_empty_counts">个数不允许为空</string>
+    <string name="toast_invalid_number">非法数字</string>
+
+    <string name="loading_dialog_title">生成联系人</string>
+    <string name="loading_dialog_message">请稍等.......</string>
+
+    <string name="message_generate_finish">完成</string>
+    <string name="message_generate_cancel">取消</string>
+
+    <string name="settings_title">设置</string>
+    <string name="generate_display_name">生成姓名</string>
+    <string name="generate_nick_name">生成昵称</string>
+    <string name="generate_phone_number">生成号码</string>
+    <string name="generate_event_number">生成事件</string>
+    <string name="generate_email">生成电子邮件</string>
+    <string name="generate_postal">生成邮政地址</string>
+    <string name="generate_im">生成即时通讯</string>
+    <string name="generate_org">生成组织</string>
+    <string name="generate_photo">生成头像</string>
+    <string name="generate_note">生成备注</string>
+    <string name="generate_web_site">生成网址</string>
+    <string name="save_success">保存成功</string>
+    <string name="save_settings">保存设置</string>
+
 </resources>

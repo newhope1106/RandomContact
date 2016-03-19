@@ -102,7 +102,7 @@ public class SettingsActivity extends Activity{
         };
 
         mListView.setAdapter(mAdapter);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -125,6 +125,13 @@ public class SettingsActivity extends Activity{
                 savePreference();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed(){
+        savePreference();
+
+        finish();
     }
 
     private class Entry{

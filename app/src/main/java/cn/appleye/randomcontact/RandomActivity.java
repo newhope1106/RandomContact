@@ -10,11 +10,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+//import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import cn.appleye.randomcontact.common.list.TabState;
 import cn.appleye.randomcontact.common.list.ViewPagerTabs;
@@ -29,6 +30,9 @@ public class RandomActivity extends AppCompatActivity{
 
     private ContactsFragment mContactsFragment;
     private GenerateFragment mGenerateFragement;
+
+    /* 两次返回键之间的间隔 */
+    private long exitTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +105,34 @@ public class RandomActivity extends AppCompatActivity{
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * 连续两个返回键退出
+     * */
+    public void onBackPressed() {
+        exit();
+    }
+
+    public void exit() {
+        int postion = mViewPagerTabs.getTabPositionSelected();
+        if (postion != TabState.CONTACTS) {
+            if (postion == TabState.GENERATE) {
+                if (mGenerateFragement.onBackPressed()) {
+                    mTabPager.setCurrentItem(TabState.CONTACTS);
+                }
+            }
+        } else {
+            if ((System.currentTimeMillis() - exitTime) > 1000) {
+                Toast.makeText(this,
+                        getString(R.string.keyback_hint), Toast.LENGTH_SHORT)
+                        .show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+                System.exit(0);
+            }
+        }
     }
 
 

@@ -376,24 +376,14 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
         }
     }
 
-    public void onBackPressed() {
+    public boolean onBackPressed() {
         if (mLoadingDialog!=null && mLoadingDialog.isShowing()) {
             mCancel = true;
-        }
-    }
-
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-
-            if (mLoadingDialog!=null && mLoadingDialog.isShowing()) {
-                mCancel = true;
-            }
 
             return false;
         }
 
-        //return super.onKeyDown(keyCode, event);
-        return false;
+        return true;
     }
 
     @Override

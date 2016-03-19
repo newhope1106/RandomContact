@@ -223,6 +223,10 @@ public class ViewPagerTabs extends HorizontalScrollView implements ViewPager.OnP
         mPrevSelected = position;
     }
 
+    public int getTabPositionSelected() {
+        return mPrevSelected;
+    }
+
     @Override
     public void onPageScrollStateChanged(int state) {
     }

@@ -61,8 +61,7 @@ public class ViewPagerTabs extends HorizontalScrollView implements ViewPager.OnP
     private static final int[] ATTRS = new int[] {
             android.R.attr.textSize,
             android.R.attr.textStyle,
-            android.R.attr.textColor,
-            android.R.attr.textAllCaps
+            android.R.attr.textColor
     };
 
     /**

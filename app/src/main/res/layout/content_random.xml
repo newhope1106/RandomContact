@@ -1,19 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="cn.appleye.randomcontact.RandomActivity"
     tools:showIn="@layout/activity_random">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <cn.appleye.randomcontact.widget.BorderLinearLayout
+        android:id="@+id/container_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-</RelativeLayout>
+        android:paddingTop="8dip"
+        android:paddingBottom="8dip">
+
+        <cn.appleye.randomcontact.widget.ClearEditText
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:paddingTop="8dip"
+            android:paddingBottom="8dip"
+            android:paddingLeft="4dip"
+            android:paddingRight="4dip"
+            android:layout_marginLeft="4dip"
+            android:layout_marginRight="4dip"
+            android:background="@null"
+            android:hint="@string/search_hint" />
+    </cn.appleye.randomcontact.widget.BorderLinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" >
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:listSelector="@android:color/transparent" />
+        <TextView
+            android:id="@+id/generate_contacts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="8dip"
+            android:paddingBottom="8dip"
+            android:paddingLeft="4dip"
+            android:paddingRight="4dip"
+            android:text="@string/contacts_generate"
+            android:textColor="#ecf0f1"
+            android:background="@drawable/button_bg"
+            android:gravity="center|center_horizontal"
+            android:textSize="24sp"/>
+    </RelativeLayout>
+
+</LinearLayout>

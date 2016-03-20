@@ -5,6 +5,7 @@
 
     <string name="contacts_generate">生成联系人</string>
     <string name="contacts">联系人</string>
+    <string name="no_contacts">无联系人</string>
 
     <string name="simple_info">简单信息</string>
     <string name="multi_info">复杂信息</string>

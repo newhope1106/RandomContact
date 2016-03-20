@@ -50,9 +50,8 @@
             android:paddingBottom="8dip"
             android:paddingLeft="4dip"
             android:paddingRight="4dip"
-            android:text="@string/contacts_generate"
-            android:textColor="#ecf0f1"
-            android:background="@drawable/button_bg"
+            android:text="@string/no_contacts"
+            android:textColor="#FFB200"
             android:gravity="center|center_horizontal"
             android:textSize="24sp"/>
     </RelativeLayout>

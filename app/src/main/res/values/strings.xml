@@ -5,6 +5,7 @@
 
     <string name="contacts_generate">Generate</string>
     <string name="contacts">Contacts</string>
+    <string name="no_contacts">no contacts</string>
 
     <string name="simple_info">Simple info</string>
     <string name="multi_info">Multi info</string>

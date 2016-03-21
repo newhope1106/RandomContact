@@ -7,8 +7,8 @@
     <string name="contacts">联系人</string>
     <string name="no_contacts">无联系人</string>
 
-    <string name="simple_info">简单信息</string>
-    <string name="multi_info">复杂信息</string>
+    <string name="simple_info">只包含姓名和号码</string>
+    <string name="multi_info">包含所有类型数据</string>
     <string name="contacts_count">个数</string>
 
     <string name="multi_numbers">多个号码</string>

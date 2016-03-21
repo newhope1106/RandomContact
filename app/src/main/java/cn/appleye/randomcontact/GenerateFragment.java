@@ -33,8 +33,8 @@ import cn.appleye.randomcontact.widget.ProgressDialogEx;
  * Created by iSpace on 2016/3/19.
  */
 public class GenerateFragment extends Fragment implements Handler.Callback {
-    private ClickableTextView mSimpleInfoView;
-    private ClickableTextView mFullInfoView;
+    private CheckableTextView mSimpleInfoView;
+    private CheckableTextView mFullInfoView;
     private EditText mCountsView;
     private CheckableTextView mMultiNumberCheckbox;
     private CheckableTextView mSameRepeatCheckbox;
@@ -73,9 +73,9 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
 
         View rootView = getView();
 
-        mSimpleInfoView = (ClickableTextView)rootView.findViewById(R.id.simple_info_view);
+        mSimpleInfoView = (CheckableTextView)rootView.findViewById(R.id.simple_info_view);
         mSimpleInfoView.setChecked(true);
-        mFullInfoView = (ClickableTextView)rootView.findViewById(R.id.full_info_view);
+        mFullInfoView = (CheckableTextView)rootView.findViewById(R.id.full_info_view);
         mFullInfoView.setChecked(false);
         mCountsView = (EditText)rootView.findViewById(R.id.contacts_count);
         mMultiNumberCheckbox = (CheckableTextView)rootView.findViewById(R.id.multi_numbers_checkbox);

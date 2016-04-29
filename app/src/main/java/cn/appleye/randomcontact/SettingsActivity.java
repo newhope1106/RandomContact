@@ -50,16 +50,16 @@ public class SettingsActivity extends Activity{
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         mEntries.add(new Entry(SettingsUtils.PRE_KEY_DISPLAY_NAME, getString(R.string.generate_display_name), true));
-        mEntries.add(new Entry(SettingsUtils.PRE_KEY_NICK_NAME, getString(R.string.generate_nick_name), true));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_NICK_NAME, getString(R.string.generate_nick_name), false));
         mEntries.add(new Entry(SettingsUtils.PRE_KEY_PNONE_NUMBER, getString(R.string.generate_phone_number), true));
-        mEntries.add(new Entry(SettingsUtils.PRE_KEY_EVENT, getString(R.string.generate_event_number), true));
-        mEntries.add(new Entry(SettingsUtils.PRE_KEY_EMAIL, getString(R.string.generate_email), true));
-        mEntries.add(new Entry(SettingsUtils.PRE_KEY_POSTAL, getString(R.string.generate_postal), true));
-        mEntries.add(new Entry(SettingsUtils.PRE_KEY_IM, getString(R.string.generate_im), true));
-        mEntries.add(new Entry(SettingsUtils.PRE_KEY_ORG, getString(R.string.generate_org), true));
-        mEntries.add(new Entry(SettingsUtils.PRE_KEY_PHOTO, getString(R.string.generate_photo), true));
-        mEntries.add(new Entry(SettingsUtils.PRE_KEY_NOTE, getString(R.string.generate_note), true));
-        mEntries.add(new Entry(SettingsUtils.PRE_KEY_WEBSITE, getString(R.string.generate_web_site), true));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_EVENT, getString(R.string.generate_event_number), false));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_EMAIL, getString(R.string.generate_email), false));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_POSTAL, getString(R.string.generate_postal), false));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_IM, getString(R.string.generate_im), false));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_ORG, getString(R.string.generate_org), false));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_PHOTO, getString(R.string.generate_photo), false));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_NOTE, getString(R.string.generate_note), false));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_WEBSITE, getString(R.string.generate_web_site), false));
 
         for (Entry entry : mEntries) {
             boolean value = mPrefs.getBoolean(entry.getKey(), entry.isChecked());

@@ -13,7 +13,6 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,22 +25,18 @@ import java.util.ArrayList;
 import cn.appleye.randomcontact.common.model.BaseContactType;
 import cn.appleye.randomcontact.utils.SettingsUtils;
 import cn.appleye.randomcontact.widget.CheckableTextView;
-import cn.appleye.randomcontact.widget.ClickableTextView;
 import cn.appleye.randomcontact.widget.ProgressDialogEx;
 
 /**
  * Created by iSpace on 2016/3/19.
  */
 public class GenerateFragment extends Fragment implements Handler.Callback {
-    private CheckableTextView mSimpleInfoView;
-    private CheckableTextView mFullInfoView;
     private EditText mCountsView;
     private CheckableTextView mMultiNumberCheckbox;
     private CheckableTextView mSameRepeatCheckbox;
     private Button mResetBtn;
     private Button mOKBtn;
 
-    private boolean mIsSimpleInfo = true;
     private boolean mIsMultiNumberAllowed = false;
     private boolean mIsSameContactRepeat = false;
 
@@ -72,11 +67,6 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
         mContext = getActivity();
 
         View rootView = getView();
-
-        mSimpleInfoView = (CheckableTextView)rootView.findViewById(R.id.simple_info_view);
-        mSimpleInfoView.setChecked(true);
-        mFullInfoView = (CheckableTextView)rootView.findViewById(R.id.full_info_view);
-        mFullInfoView.setChecked(false);
         mCountsView = (EditText)rootView.findViewById(R.id.contacts_count);
         mMultiNumberCheckbox = (CheckableTextView)rootView.findViewById(R.id.multi_numbers_checkbox);
         mSameRepeatCheckbox = (CheckableTextView)rootView.findViewById(R.id.same_repeat_checkbox);
@@ -125,7 +115,6 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
                 } else if (!countText.matches("[1-9][0-9]{0,5}")) {
                     Toast.makeText(mContext, R.string.toast_invalid_number, Toast.LENGTH_SHORT).show();
                 } else {
-                    mIsSimpleInfo = mSimpleInfoView.isChecked();
                     mIsMultiNumberAllowed = mMultiNumberCheckbox.isChecked();
                     mIsSameContactRepeat = mSameRepeatCheckbox.isChecked();
 
@@ -133,29 +122,9 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
                 }
             }
         });
-
-        mSimpleInfoView.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                mSimpleInfoView.toggole();
-                mFullInfoView.toggole();
-            }
-        });
-
-        mFullInfoView.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                mSimpleInfoView.toggole();
-                mFullInfoView.toggole();
-            }
-        });
     }
 
     private void resetItems() {
-        mSimpleInfoView.setChecked(true);
-        mFullInfoView.setChecked(false);
         mCountsView.setText("");
         mMultiNumberCheckbox.setChecked(false);
         mSameRepeatCheckbox.setChecked(false);
@@ -182,51 +151,49 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
             baseContactType.addDataKindPhone(mIsMultiNumberAllowed?3:1);
         }
 
-        value = pref.getBoolean(SettingsUtils.PRE_KEY_PHOTO, true);
+        value = pref.getBoolean(SettingsUtils.PRE_KEY_PHOTO, false);
         if (value) {
             baseContactType.addDataKindPhoto();
         }
 
-        if (!mIsSimpleInfo){
-            value = pref.getBoolean(SettingsUtils.PRE_KEY_EVENT, true);
-            if (value) {
-                baseContactType.addDataKindEvent();
-            }
+        value = pref.getBoolean(SettingsUtils.PRE_KEY_EVENT, false);
+        if (value) {
+            baseContactType.addDataKindEvent();
+        }
 
-            value = pref.getBoolean(SettingsUtils.PRE_KEY_EMAIL, true);
-            if (value) {
-                baseContactType.addDataKindEmail();
-            }
+        value = pref.getBoolean(SettingsUtils.PRE_KEY_EMAIL, false);
+        if (value) {
+            baseContactType.addDataKindEmail();
+        }
 
-            value = pref.getBoolean(SettingsUtils.PRE_KEY_IM, true);
-            if (value) {
-                baseContactType.addDataKindIm();
-            }
+        value = pref.getBoolean(SettingsUtils.PRE_KEY_IM, false);
+        if (value) {
+            baseContactType.addDataKindIm();
+        }
 
-            value = pref.getBoolean(SettingsUtils.PRE_KEY_NICK_NAME, true);
-            if (value) {
-                baseContactType.addDataKindNickname();
-            }
+        value = pref.getBoolean(SettingsUtils.PRE_KEY_NICK_NAME, false);
+        if (value) {
+            baseContactType.addDataKindNickname();
+        }
 
-            value = pref.getBoolean(SettingsUtils.PRE_KEY_NOTE, true);
-            if (value) {
-                baseContactType.addDataKindNote();
-            }
+        value = pref.getBoolean(SettingsUtils.PRE_KEY_NOTE, false);
+        if (value) {
+            baseContactType.addDataKindNote();
+        }
 
-            value = pref.getBoolean(SettingsUtils.PRE_KEY_ORG, true);
-            if (value) {
-                baseContactType.addDataKindOrganization();
-            }
+        value = pref.getBoolean(SettingsUtils.PRE_KEY_ORG, false);
+        if (value) {
+            baseContactType.addDataKindOrganization();
+        }
 
-            value = pref.getBoolean(SettingsUtils.PRE_KEY_WEBSITE, true);
-            if (value) {
-                baseContactType.addDataKindWebsite();
-            }
+        value = pref.getBoolean(SettingsUtils.PRE_KEY_WEBSITE, false);
+        if (value) {
+            baseContactType.addDataKindWebsite();
+        }
 
-            value = pref.getBoolean(SettingsUtils.PRE_KEY_POSTAL, true);
-            if (value) {
-                baseContactType.addDataKindStructuredPostal();
-            }
+        value = pref.getBoolean(SettingsUtils.PRE_KEY_POSTAL, false);
+        if (value) {
+            baseContactType.addDataKindStructuredPostal();
         }
 
         return baseContactType;

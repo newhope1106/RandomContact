@@ -30,30 +30,6 @@
         android:paddingRight="4dip"
         android:gravity="center_vertical|center_horizontal">
         <cn.appleye.randomcontact.widget.CheckableTextView
-            android:id="@+id/simple_info_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:paddingTop="4dip"
-            android:paddingBottom="4dip"
-            android:text="@string/simple_info"
-            android:textColor="#16a085" />
-        <cn.appleye.randomcontact.widget.CheckableTextView
-            android:id="@+id/full_info_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:paddingTop="4dip"
-            android:paddingBottom="4dip"
-            android:text="@string/multi_info"
-            android:textColor="#16a085" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="#bdc3c7" />
-        <cn.appleye.randomcontact.widget.CheckableTextView
             android:id="@+id/multi_numbers_checkbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">RandomContact</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_basic_settings">Basic Settings</string>
+    <string name="action_advanced_settings">Advanced Settings</string>
     <string name="search_hint">Input keyword</string>
 
     <string name="contacts_generate">Generate</string>

@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     android:background="#FEFEFE"
     android:orientation="vertical"
-    android:gravity="center_vertical|center_horizontal"
-    tools:context="cn.appleye.randomcontact.ContactGenerateActivity" >
+    android:gravity="center_vertical|center_horizontal">
     <cn.appleye.randomcontact.widget.ClearEditText
         android:id="@+id/contacts_count"
         android:layout_width="match_parent"
@@ -29,20 +28,6 @@
         android:paddingLeft="4dip"
         android:paddingRight="4dip"
         android:gravity="center_vertical|center_horizontal">
-        <cn.appleye.randomcontact.widget.CheckableTextView
-            android:id="@+id/multi_numbers_checkbox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:paddingTop="4dip"
-            android:paddingBottom="4dip"
-            android:text="@string/multi_numbers"
-            android:textColor="#16a085" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="#bdc3c7" />
         <cn.appleye.randomcontact.widget.CheckableTextView
             android:id="@+id/same_repeat_checkbox"
             android:layout_width="match_parent"

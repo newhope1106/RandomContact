@@ -98,8 +98,12 @@ public class RandomActivity extends AppCompatActivity{
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_basic_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        } else if(id == R.id.action_advanced_settings) {
+            Intent intent = new Intent(this, AdvancedSettingsActivity.class);
             startActivity(intent);
             return true;
         }

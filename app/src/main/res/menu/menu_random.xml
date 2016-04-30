@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="cn.appleye.randomcontact.RandomActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_basic_settings"
         android:orderInCategory="100"
         android:title="@string/action_basic_settings"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_more_settings"
+        android:id="@+id/action_advanced_settings"
         android:orderInCategory="100"
         android:title="@string/action_advanced_settings"
         app:showAsAction="never" />

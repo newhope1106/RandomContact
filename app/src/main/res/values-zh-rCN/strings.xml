@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">RandomContact</string>
     <string name="action_basic_settings">基本设置</string>
     <string name="action_advanced_settings">高级设置</string>
 
@@ -37,7 +38,7 @@
     <string name="generate_display_name">生成姓名</string>
     <string name="generate_nick_name">生成昵称</string>
     <string name="generate_phone_number">生成号码</string>
-    <string name="generate_event_number">生成事件</string>
+    <string name="generate_event_number">生成事件(生日或周年纪念日等)</string>
     <string name="generate_email">生成电子邮件</string>
     <string name="generate_postal">生成邮政地址</string>
     <string name="generate_im">生成即时通讯</string>
@@ -48,4 +49,5 @@
     <string name="save_success">保存成功</string>
     <string name="save_settings">保存设置</string>
 
+    <string name="advanced_settings_title">高级设置</string>
 </resources>

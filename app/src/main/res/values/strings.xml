@@ -36,7 +36,7 @@
     <string name="generate_display_name">generate display name</string>
     <string name="generate_nick_name">generate nick name</string>
     <string name="generate_phone_number">generate phone number</string>
-    <string name="generate_event_number">generate event</string>
+    <string name="generate_event_number">generate event(like birthday and so on)</string>
     <string name="generate_email">generate email</string>
     <string name="generate_postal">generate postal</string>
     <string name="generate_im">generate IM</string>
@@ -46,4 +46,7 @@
     <string name="generate_web_site">generate web site</string>
     <string name="save_success">save success</string>
     <string name="save_settings">save settings</string>
+    <string name="title_activity_advanced_settings">Advanced Settings</string>
+
+    <string name="advanced_settings_title">Advanced Settings</string>
 </resources>

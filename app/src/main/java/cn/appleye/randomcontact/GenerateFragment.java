@@ -32,7 +32,6 @@ import cn.appleye.randomcontact.widget.ProgressDialogEx;
  */
 public class GenerateFragment extends Fragment implements Handler.Callback {
     private EditText mCountsView;
-    private CheckableTextView mMultiNumberCheckbox;
     private CheckableTextView mSameRepeatCheckbox;
     private Button mResetBtn;
     private Button mOKBtn;
@@ -68,7 +67,6 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
 
         View rootView = getView();
         mCountsView = (EditText)rootView.findViewById(R.id.contacts_count);
-        mMultiNumberCheckbox = (CheckableTextView)rootView.findViewById(R.id.multi_numbers_checkbox);
         mSameRepeatCheckbox = (CheckableTextView)rootView.findViewById(R.id.same_repeat_checkbox);
         mResetBtn = (Button)rootView.findViewById(R.id.reset_btn);
         mOKBtn = (Button)rootView.findViewById(R.id.ok_btn);
@@ -80,13 +78,6 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
      * 添加点击事件
      * */
     private void setEventListener() {
-        mMultiNumberCheckbox.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                mMultiNumberCheckbox.toggole();
-            }
-        });
 
         mSameRepeatCheckbox.setOnClickListener(new View.OnClickListener() {
 
@@ -115,7 +106,6 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
                 } else if (!countText.matches("[1-9][0-9]{0,5}")) {
                     Toast.makeText(mContext, R.string.toast_invalid_number, Toast.LENGTH_SHORT).show();
                 } else {
-                    mIsMultiNumberAllowed = mMultiNumberCheckbox.isChecked();
                     mIsSameContactRepeat = mSameRepeatCheckbox.isChecked();
 
                     startGenerate(countText);
@@ -126,7 +116,6 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
 
     private void resetItems() {
         mCountsView.setText("");
-        mMultiNumberCheckbox.setChecked(false);
         mSameRepeatCheckbox.setChecked(false);
     }
 

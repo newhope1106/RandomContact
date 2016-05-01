@@ -49,4 +49,17 @@
     <string name="title_activity_advanced_settings">Advanced Settings</string>
 
     <string name="advanced_settings_title">Advanced Settings</string>
+    <string name="label_display_name">display name</string>
+    <string name="min_length">min length</string>
+    <string name="max_length">max length</string>
+    <string name="min_count">min count</string>
+    <string name="max_count">max count</string>
+    <string name="label_phone_number">phone number</string>
+    <string name="label_event">event(like birthday and so on)</string>
+    <string name="label_email">email</string>
+    <string name="label_postal">postal</string>
+    <string name="label_im">IM</string>
+    <string name="label_org">organization</string>
+    <string name="label_note">note</string>
+    <string name="label_web_site">web site</string>
 </resources>

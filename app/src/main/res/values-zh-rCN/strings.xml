@@ -50,4 +50,17 @@
     <string name="save_settings">保存设置</string>
 
     <string name="advanced_settings_title">高级设置</string>
+    <string name="label_display_name">姓名</string>
+    <string name="min_length">最小长度</string>
+    <string name="max_length">最大长度</string>
+    <string name="min_count">最小值</string>
+    <string name="max_count">最大值</string>
+    <string name="label_phone_number">号码</string>
+    <string name="label_event">时间(生日或周年纪念日等)</string>
+    <string name="label_email">电子邮件</string>
+    <string name="label_postal">邮政地址</string>
+    <string name="label_im">即时通讯</string>
+    <string name="label_org">组织</string>
+    <string name="label_note">备注</string>
+    <string name="label_web_site">网址</string>
 </resources>

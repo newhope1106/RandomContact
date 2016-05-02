@@ -19,13 +19,15 @@
         <TextView
             android:id="@+id/item_min_label"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:textSize="16sp"/>
-        <SeekBar
-            android:id="@+id/item_min_seekbar"
+        <TextView
+            android:id="@+id/item_min_edit"
             android:layout_weight="1"
             android:layout_width="0dip"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -34,12 +36,14 @@
         <TextView
             android:id="@+id/item_max_label"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:textSize="16sp"/>
-        <SeekBar
-            android:id="@+id/item_max_seekbar"
+        <TextView
+            android:id="@+id/item_max_edit"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_width="0dip"
-            android:layout_height="match_parent" />
+            android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>

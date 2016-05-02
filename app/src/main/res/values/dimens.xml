@@ -6,4 +6,5 @@
 
     <!-- Height of the selection indicator of a tab. -->
     <dimen name="tab_selected_underline_height">2dp</dimen>
+    <dimen name="seek_bar_thumb_size">10dip</dimen>
 </resources>

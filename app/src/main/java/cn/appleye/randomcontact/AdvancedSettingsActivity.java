@@ -8,13 +8,11 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -97,15 +95,13 @@ public class AdvancedSettingsActivity extends Activity {
 
                 TextView minLabelView = (TextView)convertView.findViewById(R.id.item_min_label);
                 minLabelView.setText(entry.getMinValueLabel());
-                SeekBar minValueSeekBar = (SeekBar)convertView.findViewById(R.id.item_min_seekbar);
-                minValueSeekBar.setMax(entry.getLimitValue());
-                minValueSeekBar.setProgress(entry.getMinValue());
+                TextView minEditView = (TextView)convertView.findViewById(R.id.item_min_edit);
+                minEditView.setText(entry.getMinValue() + "");
 
                 TextView maxLabelView = (TextView)convertView.findViewById(R.id.item_max_label);
                 maxLabelView.setText(entry.getMaxValueLabel());
-                SeekBar maxValueSeekBar = (SeekBar)convertView.findViewById(R.id.item_max_seekbar);
-                maxValueSeekBar.setMax(entry.getLimitValue());
-                maxValueSeekBar.setProgress(entry.getMaxValue());
+                TextView maxEditView = (TextView)convertView.findViewById(R.id.item_max_edit);
+                maxEditView.setText(entry.getMaxValue() + "");
 
                 return convertView;
             }
@@ -120,6 +116,13 @@ public class AdvancedSettingsActivity extends Activity {
             @Override
             public void onClick(View v) {
                 savePreference();
+            }
+        });
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                
             }
         });
     }

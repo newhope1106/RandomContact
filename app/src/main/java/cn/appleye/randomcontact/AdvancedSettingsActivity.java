@@ -46,36 +46,53 @@ public class AdvancedSettingsActivity extends Activity {
     private void initPreference(){
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        mEntries.add(new Entry(SettingsUtils.PER_KEY_DISPLAY_NAME_MIN_LENGTH, SettingsUtils.PER_KEY_DISPLAY_NAME_MAX_LENGTH,
-                getString(R.string.label_display_name), getString(R.string.min_length), getString(R.string.max_length), 3, 3, 100));
+        mEntries.add(new Entry(SettingsUtils.PER_KEY_DISPLAY_NAME_MIN_LENGTH,
+                getString(R.string.label_display_name), getString(R.string.min_length), true, 3, 100));
+        mEntries.add(new Entry(SettingsUtils.PER_KEY_DISPLAY_NAME_MAX_LENGTH,
+                getString(R.string.label_display_name), getString(R.string.max_length), false, 3, 100));
 
-        mEntries.add(new Entry(SettingsUtils.PRE_KEY_PHNONE_NUMBER_MIN_COUNT, SettingsUtils.PRE_KEY_PHNONE_NUMBER_MAX_COUNT,
-                getString(R.string.label_phone_number), getString(R.string.min_count), getString(R.string.max_count)));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_PHNONE_NUMBER_MIN_COUNT,
+                getString(R.string.label_phone_number), getString(R.string.min_count), true));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_PHNONE_NUMBER_MAX_COUNT,
+                getString(R.string.label_phone_number), getString(R.string.max_count), false));
 
-        mEntries.add(new Entry(SettingsUtils.PRE_KEY_EVENT_MIN_COUNT, SettingsUtils.PRE_KEY_EVENT_MAX_COUNT,
-                getString(R.string.label_event), getString(R.string.min_count), getString(R.string.max_count)));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_EVENT_MIN_COUNT,
+                getString(R.string.label_event), getString(R.string.min_count), true));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_EVENT_MAX_COUNT,
+                getString(R.string.label_event), getString(R.string.max_count), false));
 
-        mEntries.add(new Entry(SettingsUtils.PRE_KEY_EMAIL_MIN_COUNT, SettingsUtils.PRE_KEY_EMAIL_MAX_COUNT,
-                getString(R.string.label_email), getString(R.string.min_count), getString(R.string.max_count)));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_EMAIL_MIN_COUNT,
+                getString(R.string.label_email), getString(R.string.min_count), true));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_EMAIL_MAX_COUNT,
+                getString(R.string.label_email), getString(R.string.max_count), false));
 
-        mEntries.add(new Entry(SettingsUtils.PRE_KEY_POSTAL_MIN_COUNT, SettingsUtils.PRE_KEY_POSTAL_MAX_COUNT,
-                getString(R.string.label_postal), getString(R.string.min_count), getString(R.string.max_count)));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_POSTAL_MIN_COUNT,
+                getString(R.string.label_postal), getString(R.string.min_count), true));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_POSTAL_MAX_COUNT,
+                getString(R.string.label_postal), getString(R.string.max_count), false));
 
-        mEntries.add(new Entry(SettingsUtils.PRE_KEY_IM_MIN_COUNT, SettingsUtils.PRE_KEY_IM_MAX_COUNT,
-                getString(R.string.label_im), getString(R.string.min_count), getString(R.string.max_count)));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_IM_MIN_COUNT,
+                getString(R.string.label_im), getString(R.string.min_count), true));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_IM_MAX_COUNT,
+                getString(R.string.label_im), getString(R.string.max_count), false));
 
-        mEntries.add(new Entry(SettingsUtils.PRE_KEY_ORG_MIN_COUNT, SettingsUtils.PRE_KEY_ORG_MAX_COUNT,
-                getString(R.string.label_org), getString(R.string.min_count), getString(R.string.max_count)));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_ORG_MIN_COUNT,
+                getString(R.string.label_org), getString(R.string.min_count), true));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_ORG_MAX_COUNT,
+                getString(R.string.label_org), getString(R.string.max_count), false));
 
-        mEntries.add(new Entry(SettingsUtils.PRE_KEY_NOTE_MIN_COUNT, SettingsUtils.PRE_KEY_NOTE_MAX_COUNT,
-                getString(R.string.label_note), getString(R.string.min_count), getString(R.string.max_count)));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_NOTE_MIN_COUNT,
+                getString(R.string.label_note), getString(R.string.min_count), true));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_NOTE_MAX_COUNT,
+                getString(R.string.label_note), getString(R.string.max_count), false));
 
-        mEntries.add(new Entry(SettingsUtils.PRE_KEY_WEBSITE_MIN_COUNT, SettingsUtils.PRE_KEY_WEBSITE_MAX_COUNT,
-                getString(R.string.label_web_site), getString(R.string.min_count), getString(R.string.max_count)));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_WEBSITE_MIN_COUNT,
+                getString(R.string.label_web_site), getString(R.string.min_count), true));
+        mEntries.add(new Entry(SettingsUtils.PRE_KEY_WEBSITE_MAX_COUNT,
+                getString(R.string.label_web_site), getString(R.string.max_count), false));
 
         for(Entry entry : mEntries) {
-            entry.setMinValue(mPrefs.getInt(entry.getMinKey(), entry.getMinValue()));
-            entry.setMaxValue(mPrefs.getInt(entry.getMaxKey(), entry.getMaxValue()));
+            entry.setValue(mPrefs.getInt(entry.getKey(), entry.getValue()));
         }
     }
 
@@ -84,24 +101,31 @@ public class AdvancedSettingsActivity extends Activity {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
+                boolean useCache = true;
                 if (convertView == null) {
+                    useCache = false;
                     convertView = mInflater.inflate(R.layout.advanced_settings_list_item_view, null);
                 }
 
                 Entry entry = mEntries.get(position);
 
                 TextView titleView = (TextView)convertView.findViewById(R.id.item_title);
-                titleView.setText(entry.getTitle());
+                if (entry.isFirst()) {
+                    titleView.setText(entry.getTitle());
+                    titleView.setVisibility(View.VISIBLE);
+                } else {
+                    titleView.setVisibility(View.GONE);
+                }
 
-                TextView minLabelView = (TextView)convertView.findViewById(R.id.item_min_label);
-                minLabelView.setText(entry.getMinValueLabel());
-                TextView minEditView = (TextView)convertView.findViewById(R.id.item_min_edit);
-                minEditView.setText(entry.getMinValue() + "");
+                TextView labelView = (TextView)convertView.findViewById(R.id.item_label);
+                labelView.setText(entry.getValueLabel());
+                TextView editView = (TextView)convertView.findViewById(R.id.item_edit);
+                editView.setText(entry.getValue() + "");
+                editView.setTag(entry);
 
-                TextView maxLabelView = (TextView)convertView.findViewById(R.id.item_max_label);
-                maxLabelView.setText(entry.getMaxValueLabel());
-                TextView maxEditView = (TextView)convertView.findViewById(R.id.item_max_edit);
-                maxEditView.setText(entry.getMaxValue() + "");
+                if (!useCache) {
+                    editView.setOnClickListener(new EditViewOnClickListener());
+                }
 
                 return convertView;
             }
@@ -122,16 +146,23 @@ public class AdvancedSettingsActivity extends Activity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                
+
             }
         });
+    }
+
+    private class EditViewOnClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            Entry entry = (Entry) v.getTag();
+        }
     }
 
     private void savePreference() {
         SharedPreferences.Editor editor = mPrefs.edit();
         for (Entry entry : mEntries) {
-            editor.putInt(entry.getMinKey(), entry.getMinValue());
-            editor.putInt(entry.getMaxKey(), entry.getMaxValue());
+            editor.putInt(entry.getKey(), entry.getValue());
         }
 
         editor.commit();
@@ -142,66 +173,49 @@ public class AdvancedSettingsActivity extends Activity {
     }
 
     private class Entry{
-        private String mMinKey;
-        private String mMaxKey;
+        private String mKey;
         private String mTitle;
-        private String mMinValueLabel;
-        private String mMaxValueLabel;
-        private int mMinValue;
-        private int mMaxValue;
+        private String mValueLabel;
+        private int mValue;
         private int mLimitValue;
+        private boolean mIsFirst;
 
-        public Entry(String minKey, String maxKey,  String title, String minValueLabel, String maxValueLabel) {
-            this(minKey, maxKey, title, minValueLabel, maxValueLabel, 1, 1, 5);
+        public Entry(String key, String title, String valueLabel, boolean isFirst) {
+            this(key, title, valueLabel, isFirst, 1, 5);
         }
 
-        public Entry(String minKey, String maxKey, String title, String minValueLabel, String maxValueLabel, int minValue, int maxValue, int limitValue) {
-            mMinKey = minKey;
-            mMaxKey = maxKey;
+        public Entry(String key, String title, String valueLabel, boolean isFirst, int value, int limitValue) {
+            mKey = key;
             mTitle = title;
-            mMinValueLabel = minValueLabel;
-            mMaxValueLabel = maxValueLabel;
-            mMinValue = minValue;
-            mMaxValue = maxValue;
+            mValueLabel = valueLabel;
+            mIsFirst = isFirst;
+            mValue = value;
             mLimitValue = limitValue;
         }
 
-        public String getMinKey() {
-            return mMinKey;
-        }
-
-        public String getMaxKey() {
-            return mMaxKey;
+        public String getKey() {
+            return mKey;
         }
 
         public String getTitle() {
             return mTitle;
         }
 
-        public String getMinValueLabel() {
-            return mMinValueLabel;
+        public String getValueLabel() {
+            return mValueLabel;
         }
 
-        public void setMinValue(int minValue) {
-            mMinValue = minValue;
+        public boolean isFirst() {
+            return mIsFirst;
         }
 
-        public int getMinValue() {
-            return mMinValue;
+        public void setValue(int value) {
+            mValue = value;
         }
 
-        public String getMaxValueLabel() {
-            return mMaxValueLabel;
+        public int getValue() {
+            return mValue;
         }
-
-        public void setMaxValue(int maxValue) {
-            mMaxValue = maxValue;
-        }
-
-        public int getMaxValue() {
-            return mMaxValue;
-        }
-
 
         public int getLimitValue() {
             return mLimitValue;

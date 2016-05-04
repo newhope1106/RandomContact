@@ -62,4 +62,6 @@
     <string name="label_org">organization</string>
     <string name="label_note">note</string>
     <string name="label_web_site">web site</string>
+
+    <string name="circle_seek_dialog_title">Value Set</string>
 </resources>

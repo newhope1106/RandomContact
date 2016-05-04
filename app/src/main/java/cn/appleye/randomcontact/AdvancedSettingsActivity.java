@@ -2,6 +2,7 @@ package cn.appleye.randomcontact;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import cn.appleye.randomcontact.utils.SettingsUtils;
+import cn.appleye.randomcontact.widget.CirclSeekDialog;
+import cn.appleye.randomcontact.widget.CircleSeekBar;
 
 public class AdvancedSettingsActivity extends Activity {
     private ListView mListView;
@@ -26,6 +29,9 @@ public class AdvancedSettingsActivity extends Activity {
     private LayoutInflater mInflater;
 
     private ArrayList<Entry> mEntries = new ArrayList<Entry>();
+
+    private CirclSeekDialog mDialog = null;
+    private CircleSeekBar mCircleSeekBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,21 +148,57 @@ public class AdvancedSettingsActivity extends Activity {
                 savePreference();
             }
         });
-
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
     }
 
     private class EditViewOnClickListener implements View.OnClickListener{
 
         @Override
-        public void onClick(View v) {
-            Entry entry = (Entry) v.getTag();
+        public void onClick(View view) {
+            Entry entry = (Entry) view.getTag();
+
+            if (entry != null) {
+                showSeekBarDialog(entry);
+            }
         }
+    }
+
+    private void showSeekBarDialog(Entry entry) {
+        if (mDialog == null) {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View contentView = inflater.inflate(R.layout.circle_seek_bar_layout, null);
+            mCircleSeekBar = (CircleSeekBar) contentView.findViewById(R.id.circle_seekbar);
+
+            CirclSeekDialog.Builder builder = new CirclSeekDialog.Builder(this);
+            builder.setContentView(contentView);
+            //builder.setMessage("这个就是自定义的提示框");
+            builder.setTitle(getString(R.string.circle_seek_dialog_title));
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    if (mCircleSeekBar != null) {
+                        Entry entry = (Entry) mCircleSeekBar.getTag();
+                        entry.setValue(mCircleSeekBar.getProgress());
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }
+            });
+
+            builder.setNegativeButton("取消",
+                    new android.content.DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            mDialog = builder.create();
+        }
+
+        if (mCircleSeekBar != null) {
+            mCircleSeekBar.setProgressMax(entry.getLimitValue()+1);
+            mCircleSeekBar.setProgress(entry.getValue());
+            mCircleSeekBar.setTag(entry);
+        }
+
+        mDialog.show();
     }
 
     private void savePreference() {

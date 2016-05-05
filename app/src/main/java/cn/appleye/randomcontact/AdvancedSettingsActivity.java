@@ -178,6 +178,18 @@ public class AdvancedSettingsActivity extends Activity {
                     if (mCircleSeekBar != null) {
                         Entry entry = (Entry) mCircleSeekBar.getTag();
                         entry.setValue(mCircleSeekBar.getProgress());
+                        if (entry.isFirst()) {
+                            Entry nextEntry = mEntries.get(mEntries.indexOf(entry) + 1);
+                            if (nextEntry.getValue() < entry.getValue()) {
+                                nextEntry.setValue(entry.getValue());
+                            }
+                        } else {
+                            Entry preEntry = mEntries.get(mEntries.indexOf(entry) - 1);
+                            if (preEntry.getValue() > entry.getValue()) {
+                                preEntry.setValue(entry.getValue());
+                            }
+                        }
+
                         mAdapter.notifyDataSetChanged();
                     }
                 }

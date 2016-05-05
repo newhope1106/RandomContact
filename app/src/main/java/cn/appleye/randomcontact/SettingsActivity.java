@@ -129,7 +129,7 @@ public class SettingsActivity extends Activity{
 
     @Override
     public void onBackPressed(){
-        savePreference();
+        //savePreference();
 
         finish();
     }

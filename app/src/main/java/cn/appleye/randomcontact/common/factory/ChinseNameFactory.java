@@ -104,7 +104,6 @@ public class ChinseNameFactory implements IFactory{
 
 	@Override
 	public String createSecondRandomData() {
-		// TODO Auto-generated method stub
 		return null;
 	}  
 }

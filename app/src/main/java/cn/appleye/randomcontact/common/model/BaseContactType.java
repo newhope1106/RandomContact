@@ -18,7 +18,6 @@ import android.provider.ContactsContract.CommonDataKinds.StructuredPostal;
 import android.provider.ContactsContract.CommonDataKinds.Website;
 import android.provider.ContactsContract.Data;
 import android.text.TextUtils;
-import android.util.Log;
 import cn.appleye.randomcontact.common.factory.ChinseNameFactory;
 import cn.appleye.randomcontact.common.factory.EmailFactory;
 import cn.appleye.randomcontact.common.factory.EventFactory;

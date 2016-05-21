@@ -73,8 +73,8 @@ public class RandomActivity extends AppCompatActivity{
         final String CONTACTS_TAG = "tab-pager-contacts";
         final String GENERATE_TAG = "tab-pager-generate";
 
-        transaction.add(R.id.tab_pager, mContactsFragment, CONTACTS_TAG);
         transaction.add(R.id.tab_pager, mGenerateFragement, GENERATE_TAG);
+        transaction.add(R.id.tab_pager, mContactsFragment, CONTACTS_TAG);
 
         transaction.hide(mContactsFragment);
         transaction.hide(mGenerateFragement);

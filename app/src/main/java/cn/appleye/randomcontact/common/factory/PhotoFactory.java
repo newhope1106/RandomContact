@@ -24,7 +24,7 @@ public class PhotoFactory implements IFactory{
 	}
 
 	@Override
-	public String[] createFirstRandomData(int count, boolean repeatAllowed) {
+	public String[] createFirstRandomData(boolean repeatAllowed) {
 		
 		return null;
 	}
@@ -34,7 +34,7 @@ public class PhotoFactory implements IFactory{
 
 		return null;
 	}
-	
+
 	public byte[] createRandomPhoto(Context context) {
 		int index = (int)(Math.random() * sDrawableRes.length);
 		int resId = sDrawableRes[index];

@@ -7,6 +7,18 @@ public class EmailFactory implements IFactory{
 			"msn.com", "163.net", "ask.com", "aol.com", "263.net", "3721.net",
 			"yeah.net", "live.com"
 	};
+
+	private int mMinCount;
+	private int mMaxCount;
+
+	public EmailFactory() {
+		this(1, 1);
+	}
+
+	public EmailFactory(int minCount, int maxCount) {
+		mMinCount = minCount;
+		mMaxCount = maxCount;
+	}
 	
 	public static String createOneRandomEmail() {
 		int domainIndex = (int)(Math.random()*sEmailDomain.length);
@@ -45,13 +57,13 @@ public class EmailFactory implements IFactory{
 	}
 
 	@Override
-	public String[] createFirstRandomData(int count, boolean repeatAllowed) {
+	public String[] createFirstRandomData(boolean repeatAllowed) {
+		int count = mMinCount + (int)((mMaxCount - mMinCount + 1)*Math.random());
 		return createRandomEmails(count, repeatAllowed);
 	}
 
 	@Override
 	public String createSecondRandomData() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

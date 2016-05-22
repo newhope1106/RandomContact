@@ -9,7 +9,6 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -87,10 +86,10 @@ public class AdvancedSettingsActivity extends Activity {
         mEntries.add(new Entry(SettingsUtils.PRE_KEY_ORG_MAX_COUNT,
                 getString(R.string.label_org), getString(R.string.max_count), false));
 
-        mEntries.add(new Entry(SettingsUtils.PRE_KEY_NOTE_MIN_COUNT,
+        /*mEntries.add(new Entry(SettingsUtils.PRE_KEY_NOTE_MIN_COUNT,
                 getString(R.string.label_note), getString(R.string.min_count), true));
         mEntries.add(new Entry(SettingsUtils.PRE_KEY_NOTE_MAX_COUNT,
-                getString(R.string.label_note), getString(R.string.max_count), false));
+                getString(R.string.label_note), getString(R.string.max_count), false));*/
 
         mEntries.add(new Entry(SettingsUtils.PRE_KEY_WEBSITE_MIN_COUNT,
                 getString(R.string.label_web_site), getString(R.string.min_count), true));

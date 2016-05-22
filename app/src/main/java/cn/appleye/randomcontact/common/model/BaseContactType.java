@@ -18,6 +18,8 @@ import android.provider.ContactsContract.CommonDataKinds.StructuredPostal;
 import android.provider.ContactsContract.CommonDataKinds.Website;
 import android.provider.ContactsContract.Data;
 import android.text.TextUtils;
+import android.util.Log;
+
 import cn.appleye.randomcontact.common.factory.ChinseNameFactory;
 import cn.appleye.randomcontact.common.factory.EmailFactory;
 import cn.appleye.randomcontact.common.factory.EventFactory;
@@ -54,6 +56,23 @@ public class BaseContactType {
 		dataKind.factoryHandler = new ChinseNameFactory();
 		mDataKinds.add(dataKind);
 	}
+
+	/**
+	 * 姓名
+	 * @param minLength 最小长度
+	 * @param maxLength 最大长度
+	 * */
+	public void addDataKindStructuredName(int minLength, int maxLength) {
+		DataKind dataKind = new DataKind();
+		dataKind.mimetype = StructuredName.CONTENT_ITEM_TYPE;
+		dataKind.typeOverallMax = 1;
+		dataKind.minLength = minLength;
+		dataKind.maxLength = maxLength;
+		dataKind.columnName = StructuredName.DISPLAY_NAME;
+
+		dataKind.factoryHandler = new ChinseNameFactory(minLength, maxLength);
+		mDataKinds.add(dataKind);
+	}
 	
 	/**
 	 * 昵称
@@ -67,11 +86,13 @@ public class BaseContactType {
 		dataKind.factoryHandler = new NicknameFactory();
 		mDataKinds.add(dataKind);
 	}
-	
+
 	/**
 	 * 号码
+	 * @param minCount 最小个数
+	 * @param maxCount 最大个数
 	 * */
-	public void addDataKindPhone() {
+	public void addDataKindPhone(int minCount, int maxCount) {
 		DataKind dataKind = new DataKind();
 		dataKind.mimetype = Phone.CONTENT_ITEM_TYPE;
 		dataKind.typeOverallMax = 3;
@@ -79,56 +100,80 @@ public class BaseContactType {
 		dataKind.typeColumn = Phone.TYPE;
 		
 		dataKind.typeList = new ArrayList<DataType>();
-		
-		DataType dataType = new DataType();
-		dataType.type = Phone.TYPE_MOBILE;
-		dataType.typeName = "mobile";
-		dataKind.typeList.add(dataType);
-		
-		dataType = new DataType();
-		dataType.type = Phone.TYPE_HOME;
-		dataType.typeName = "home";
-		dataKind.typeList.add(dataType);
-		
-		dataType = new DataType();
-		dataType.type = Phone.TYPE_WORK;
-		dataType.typeName = "work";
-		dataKind.typeList.add(dataType);
-		
-		dataKind.factoryHandler = new PhoneNumberFactory();
+
+		for(int i=0; i<maxCount; i++) {
+			switch (i%3){
+				case 0:{
+					DataType dataType = new DataType();
+					dataType.type = Phone.TYPE_MOBILE;
+					dataType.typeName = "mobile";
+					dataKind.typeList.add(dataType);
+					break;
+				}
+
+				case 1:{
+					DataType dataType = new DataType();
+					dataType.type = Phone.TYPE_HOME;
+					dataType.typeName = "home";
+					dataKind.typeList.add(dataType);
+					break;
+				}
+
+				case 2:{
+					DataType dataType = new DataType();
+					dataType.type = Phone.TYPE_WORK;
+					dataType.typeName = "work";
+					dataKind.typeList.add(dataType);
+					break;
+				}
+
+			}
+		}
+
+		dataKind.factoryHandler = new PhoneNumberFactory(minCount, maxCount);
 		
 		mDataKinds.add(dataKind);
 	}
 	
-	public void addDataKindPhone(int maxCount) {
+	/**
+	 * 事件(生日或周年纪念)
+	 * @param minCount 最小个数
+	 * @param maxCount 最大个数
+	 * */
+	public void addDataKindEvent(int minCount, int maxCount) {
 		DataKind dataKind = new DataKind();
-		dataKind.mimetype = Phone.CONTENT_ITEM_TYPE;
-		dataKind.typeOverallMax = maxCount>3 ? 3:maxCount;
-		dataKind.columnName = Phone.NUMBER;
-		dataKind.typeColumn = Phone.TYPE;
-		
+		dataKind.mimetype = Event.CONTENT_ITEM_TYPE;
+		dataKind.typeOverallMax = 2;
+		dataKind.columnName = Event.START_DATE;
+		dataKind.typeColumn = Event.DATA2;
+
 		dataKind.typeList = new ArrayList<DataType>();
-		
-		DataType dataType = new DataType();
-		dataType.type = Phone.TYPE_MOBILE;
-		dataType.typeName = "mobile";
-		dataKind.typeList.add(dataType);
-		
-		dataType = new DataType();
-		dataType.type = Phone.TYPE_HOME;
-		dataType.typeName = "home";
-		dataKind.typeList.add(dataType);
-		
-		dataType = new DataType();
-		dataType.type = Phone.TYPE_WORK;
-		dataType.typeName = "work";
-		dataKind.typeList.add(dataType);
-		
-		dataKind.factoryHandler = new PhoneNumberFactory();
-		
+
+		for(int i=0; i<maxCount; i++) {
+			switch (i%2) {
+				case 0:{
+					DataType dataType = new DataType();
+					dataType.type = Event.TYPE_BIRTHDAY;
+					dataType.typeName = "birthday";
+					dataKind.typeList.add(dataType);
+					break;
+				}
+
+				case 1:{
+					DataType dataType = new DataType();
+					dataType.type = Event.TYPE_ANNIVERSARY;
+					dataType.typeName = "anniversary";
+					dataKind.typeList.add(dataType);
+					break;
+				}
+			}
+		}
+
+		dataKind.factoryHandler = new EventFactory(minCount, maxCount);
+
 		mDataKinds.add(dataKind);
 	}
-	
+
 	/**
 	 * 事件(生日或周年纪念)
 	 * */
@@ -138,24 +183,69 @@ public class BaseContactType {
 		dataKind.typeOverallMax = 2;
 		dataKind.columnName = Event.START_DATE;
 		dataKind.typeColumn = Event.DATA2;
-		
+
 		dataKind.typeList = new ArrayList<DataType>();
-		
+
 		DataType dataType = new DataType();
 		dataType.type = Event.TYPE_BIRTHDAY;
 		dataType.typeName = "birthday";
 		dataKind.typeList.add(dataType);
-		
+
 		dataType = new DataType();
 		dataType.type = Event.TYPE_ANNIVERSARY;
 		dataType.typeName = "anniversary";
 		dataKind.typeList.add(dataType);
-		
+
 		dataKind.factoryHandler = new EventFactory();
-		
+
 		mDataKinds.add(dataKind);
 	}
 	
+	/**
+	 * email
+	 * @param minCount 最小个数
+	 * @param maxCount 最大个数
+	 * */
+	public void addDataKindEmail(int minCount, int maxCount) {
+		DataKind dataKind = new DataKind();
+		dataKind.mimetype = Email.CONTENT_ITEM_TYPE;
+		dataKind.columnName = Email.ADDRESS;
+		dataKind.typeColumn = Email.TYPE;
+		dataKind.typeOverallMax = 3;
+
+		dataKind.typeList = new ArrayList<DataType>();
+		for (int i=0; i<maxCount; i++) {
+			switch (i%3) {
+				case 0:{
+					DataType dataType = new DataType();
+					dataType.type = Email.TYPE_MOBILE;
+					dataType.typeName = "mobile";
+					dataKind.typeList.add(dataType);
+					break;
+				}
+
+				case 1:{
+					DataType dataType = new DataType();
+					dataType.type = Email.TYPE_HOME;
+					dataType.typeName = "home";
+					dataKind.typeList.add(dataType);
+					break;
+				}
+
+				case 2:{
+					DataType dataType = new DataType();
+					dataType.type = Email.TYPE_WORK;
+					dataType.typeName = "work";
+					dataKind.typeList.add(dataType);
+					break;
+				}
+			}
+		}
+		
+		dataKind.factoryHandler = new EmailFactory(minCount, maxCount);
+		mDataKinds.add(dataKind);
+	}
+
 	/**
 	 * email
 	 * */
@@ -165,24 +255,69 @@ public class BaseContactType {
 		dataKind.columnName = Email.ADDRESS;
 		dataKind.typeColumn = Email.TYPE;
 		dataKind.typeOverallMax = 3;
-		
+
 		dataKind.typeList = new ArrayList<DataType>();
 		DataType dataType = new DataType();
 		dataType.type = Email.TYPE_MOBILE;
 		dataType.typeName = "mobile";
 		dataKind.typeList.add(dataType);
-		
+
 		dataType = new DataType();
 		dataType.type = Email.TYPE_HOME;
 		dataType.typeName = "home";
 		dataKind.typeList.add(dataType);
-		
+
 		dataType = new DataType();
 		dataType.type = Email.TYPE_WORK;
 		dataType.typeName = "work";
 		dataKind.typeList.add(dataType);
-		
+
 		dataKind.factoryHandler = new EmailFactory();
+		mDataKinds.add(dataKind);
+	}
+
+	/**
+	 * 邮政地址
+	 * @param minCount 最小个数
+	 * @param maxCount 最大个数
+	 * */
+	public void addDataKindStructuredPostal(int minCount, int maxCount) {
+		DataKind dataKind = new DataKind();
+		dataKind.mimetype = StructuredPostal.CONTENT_ITEM_TYPE;
+		dataKind.columnName = StructuredPostal.FORMATTED_ADDRESS;
+		dataKind.typeColumn = StructuredPostal.TYPE;
+		dataKind.typeOverallMax = 3;
+
+		dataKind.typeList = new ArrayList<DataType>();
+		for(int i=0; i<maxCount; i++) {
+			switch (i%3){
+				case 0:{
+					DataType dataType = new DataType();
+					dataType.type = StructuredPostal.TYPE_HOME;
+					dataType.typeName = "home";
+					dataKind.typeList.add(dataType);
+					break;
+				}
+
+				case 1:{
+					DataType dataType = new DataType();
+					dataType.type = StructuredPostal.TYPE_WORK;
+					dataType.typeName = "work";
+					dataKind.typeList.add(dataType);
+					break;
+				}
+
+				case 2:{
+					DataType dataType = new DataType();
+					dataType.type = StructuredPostal.TYPE_OTHER;
+					dataType.typeName = "other";
+					dataKind.typeList.add(dataType);
+					break;
+				}
+			}
+		}
+
+		dataKind.factoryHandler = new StructuredPostalFactory(minCount, maxCount);
 		mDataKinds.add(dataKind);
 	}
 	
@@ -213,6 +348,50 @@ public class BaseContactType {
 		dataKind.typeList.add(dataType);
 		
 		dataKind.factoryHandler = new StructuredPostalFactory();
+		mDataKinds.add(dataKind);
+	}
+
+	/**
+	 * 及时消息
+	 * @param minCount 最小个数
+	 * @param maxCount 最大个数
+	 * */
+	public void addDataKindIm(int minCount, int maxCount) {
+		DataKind dataKind = new DataKind();
+		dataKind.mimetype = Im.CONTENT_ITEM_TYPE;
+		dataKind.columnName = Im.DATA;
+		dataKind.typeColumn = Im.PROTOCOL;
+		dataKind.typeOverallMax = 3;
+
+		dataKind.typeList = new ArrayList<DataType>();
+
+		for(int i=0; i<maxCount; i++) {
+			switch (i%3){
+				case 0:{
+					DataType dataType = new DataType();
+					dataType.type = Im.PROTOCOL_QQ;
+					dataType.typeName = "QQ";
+					dataKind.typeList.add(dataType);
+					break;
+				}
+
+				case 1:{
+					DataType dataType = new DataType();
+					dataType.type = Im.PROTOCOL_MSN;
+					dataType.typeName = "MSN";
+					dataKind.typeList.add(dataType);
+				}
+
+				case 2:{
+					DataType dataType = new DataType();
+					dataType.type = Im.PROTOCOL_ICQ;
+					dataType.typeName = "ICQ";
+					dataKind.typeList.add(dataType);
+				}
+			}
+		}
+
+		dataKind.factoryHandler = new ImFactory(minCount, maxCount);
 		mDataKinds.add(dataKind);
 	}
 	
@@ -248,27 +427,65 @@ public class BaseContactType {
 	
 	/**
 	 * 组织
+	 * @param minCount 最小个数
+	 * @param maxCount 最大个数
+	 * */
+	public void addDataKindOrganization(int minCount, int maxCount) {
+		DataKind dataKind = new DataKind();
+		dataKind.mimetype = Organization.CONTENT_ITEM_TYPE;
+		dataKind.columnName = Organization.COMPANY;
+		dataKind.typeColumn = Organization.TYPE;
+		dataKind.typeOverallMax = 2;
+		
+		dataKind.typeList = new ArrayList<DataType>();
+		for(int i=0; i<maxCount; i++) {
+			switch (i%2){
+				case 0:{
+					DataType dataType = new DataType();
+					dataType.type = Organization.TYPE_WORK;
+					dataType.typeName = "work";
+					dataKind.typeList.add(dataType);
+					break;
+				}
+
+				case 1:{
+					DataType dataType = new DataType();
+					dataType.type = Organization.TYPE_OTHER;
+					dataType.typeName = "other";
+					dataKind.typeList.add(dataType);
+				}
+			}
+		}
+
+		dataKind.secondTypeColumn = Organization.TITLE;
+		
+		dataKind.factoryHandler = new OrganizationFactory(minCount, maxCount);
+		mDataKinds.add(dataKind);
+	}
+
+	/**
+	 * 组织
 	 * */
 	public void addDataKindOrganization() {
 		DataKind dataKind = new DataKind();
 		dataKind.mimetype = Organization.CONTENT_ITEM_TYPE;
 		dataKind.columnName = Organization.COMPANY;
 		dataKind.typeColumn = Organization.TYPE;
-		dataKind.typeOverallMax = 1;
-		
+		dataKind.typeOverallMax = 2;
+
 		dataKind.typeList = new ArrayList<DataType>();
 		DataType dataType = new DataType();
 		dataType.type = Organization.TYPE_WORK;
 		dataType.typeName = "work";
 		dataKind.typeList.add(dataType);
-		
+
 		dataType = new DataType();
 		dataType.type = Organization.TYPE_OTHER;
 		dataType.typeName = "other";
 		dataKind.typeList.add(dataType);
-		
+
 		dataKind.secondTypeColumn = Organization.TITLE;
-		
+
 		dataKind.factoryHandler = new OrganizationFactory();
 		mDataKinds.add(dataKind);
 	}
@@ -298,6 +515,30 @@ public class BaseContactType {
 		dataKind.factoryHandler = new NoteFactory();
 		mDataKinds.add(dataKind);
 	}
+
+	/**
+	 * 网址
+	 * @param minCount 最小个数
+	 * @param maxCount 最大个数
+	 * */
+	public void addDataKindWebsite(int minCount, int maxCount) {
+		DataKind dataKind = new DataKind();
+		dataKind.mimetype = Website.CONTENT_ITEM_TYPE;
+		dataKind.columnName = Website.URL;
+		dataKind.typeColumn = Website.TYPE;
+		dataKind.typeOverallMax = 1;
+
+		dataKind.typeList = new ArrayList<DataType>();
+		for(int i=0; i<maxCount; i++) {
+			DataType dataType = new DataType();
+			dataType.type = Website.TYPE_OTHER;
+			dataType.typeName = "other";
+			dataKind.typeList.add(dataType);
+		}
+
+		dataKind.factoryHandler = new WebsiteFactory(minCount, maxCount);
+		mDataKinds.add(dataKind);
+	}
 	
 	/**
 	 * 网址
@@ -324,59 +565,45 @@ public class BaseContactType {
 		for (DataKind dataKind : mDataKinds) {
 			int typeOverallMax = dataKind.typeOverallMax;
 			IFactory ifactoryHandler = dataKind.factoryHandler;
+			ArrayList<DataType> dataTypies = dataKind.typeList;
+
 			if (ifactoryHandler != null) {
-				if (typeOverallMax == 1) {
+				if (typeOverallMax == 1){
 					ContentValues contentValues = new ContentValues();
 					contentValues.put(Data.RAW_CONTACT_ID, rawContactId);
 					contentValues.put(Data.MIMETYPE, dataKind.mimetype);
-					
+
 					if (Photo.CONTENT_ITEM_TYPE.equals(dataKind.mimetype)) {
 						PhotoFactory photoFactory = (PhotoFactory)ifactoryHandler;
-						
+
 						if (photoFactory != null) {
 							contentValues.put(dataKind.columnName, photoFactory.createRandomPhoto(context));
 						}
 					} else {
 						contentValues.put(dataKind.columnName, ifactoryHandler.createFirstRandomData());
 					}
-					
-					if (!TextUtils.isEmpty(dataKind.typeColumn)) {
-						ArrayList<DataType> dataTypies = dataKind.typeList;
-						contentValues.put(dataKind.typeColumn, dataTypies.get(0).type);
-					}
 
-					if (!TextUtils.isEmpty(dataKind.secondTypeColumn)) {
-						contentValues.put(dataKind.secondTypeColumn, ifactoryHandler.createSecondRandomData());
-					}
-					
-					ContentProviderOperation.Builder builder = ContentProviderOperation.newInsert(Data.CONTENT_URI);
-					builder.withValues(contentValues);
-					operationList.add(builder.build());
+                    ContentProviderOperation.Builder builder = ContentProviderOperation.newInsert(Data.CONTENT_URI);
+                    builder.withValues(contentValues);
+                    operationList.add(builder.build());
 				} else {
-					ArrayList<DataType> dataTypies = dataKind.typeList;
-					if (dataTypies != null) {
-						String[] datas = ifactoryHandler.createFirstRandomData(dataTypies.size(), repeatAllowed);
-						if (datas != null) {
-							for (int i=0; i<datas.length;) {
-								ContentValues contentValues = new ContentValues();
-								contentValues.put(Data.RAW_CONTACT_ID, rawContactId);
-								contentValues.put(Data.MIMETYPE, dataKind.mimetype);
-								DataType dataType = dataTypies.get(i);
-								contentValues.put(dataKind.columnName, datas[i]);
-								contentValues.put(dataKind.typeColumn, dataType.type);
-								
-								if (!TextUtils.isEmpty(dataKind.secondTypeColumn)) {
-									contentValues.put(dataKind.secondTypeColumn, ifactoryHandler.createSecondRandomData());
-								}
-								
-								ContentProviderOperation.Builder builder = ContentProviderOperation.newInsert(Data.CONTENT_URI);
-								builder.withValues(contentValues);
-								operationList.add(builder.build());
-								i++;
-								if(i >= typeOverallMax) {
-									break;
-								}
+					String[] datas = ifactoryHandler.createFirstRandomData(repeatAllowed);
+					if (datas != null) {
+						for (int i=0; i<datas.length; i++) {
+							ContentValues contentValues = new ContentValues();
+							contentValues.put(Data.RAW_CONTACT_ID, rawContactId);
+							contentValues.put(Data.MIMETYPE, dataKind.mimetype);
+							DataType dataType = dataTypies.get(i);
+							contentValues.put(dataKind.columnName, datas[i]);
+							contentValues.put(dataKind.typeColumn, dataType.type);
+
+							if (!TextUtils.isEmpty(dataKind.secondTypeColumn)) {
+								contentValues.put(dataKind.secondTypeColumn, ifactoryHandler.createSecondRandomData());
 							}
+
+							ContentProviderOperation.Builder builder = ContentProviderOperation.newInsert(Data.CONTENT_URI);
+							builder.withValues(contentValues);
+							operationList.add(builder.build());
 						}
 					}
 				}
@@ -400,6 +627,7 @@ public class BaseContactType {
 		for (DataKind dataKind : mDataKinds) {
 			int typeOverallMax = dataKind.typeOverallMax;
 			IFactory ifactoryHandler = dataKind.factoryHandler;
+			ArrayList<DataType> dataTypies = dataKind.typeList;
 			if (ifactoryHandler != null) {
 				if (typeOverallMax == 1) {
 					ContentValues contentValues = new ContentValues();
@@ -412,26 +640,21 @@ public class BaseContactType {
 					
 					contentValuesList.add(contentValues);
 				} else {
-					ArrayList<DataType> dataTypies = dataKind.typeList;
 					if (dataTypies != null) {
-						String[] datas = ifactoryHandler.createFirstRandomData(dataTypies.size(), repeatAllowed);
+						String[] datas = ifactoryHandler.createFirstRandomData(repeatAllowed);
 						if (datas != null) {
-							for (int i=0; i<datas.length;) {
+							for (int i=0; i<datas.length;i++) {
 								ContentValues contentValues = new ContentValues();
 								contentValues.put(Data.MIMETYPE, dataKind.mimetype);
 								DataType dataType = dataTypies.get(i);
 								contentValues.put(dataKind.columnName, datas[i]);
 								contentValues.put(dataKind.typeColumn, dataType.type);
-								
+
 								if (!TextUtils.isEmpty(dataKind.secondTypeColumn)) {
 									contentValues.put(dataKind.secondTypeColumn, ifactoryHandler.createSecondRandomData());
 								}
-								
+
 								contentValuesList.add(contentValues);
-								i++;
-								if(i >= typeOverallMax) {
-									break;
-								}
 							}
 						}
 					}

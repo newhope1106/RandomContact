@@ -29,6 +29,18 @@ public class ChinseNameFactory implements IFactory{
     		+ "才发武新利清飞彬富顺信子杰涛昌成康星光天达安岩中茂进林有坚和彪博诚先敬震振壮会思群豪心邦承乐绍功松"
     		+ "善厚庆磊民友裕河哲江超浩亮政谦亨奇固之轮翰朗伯宏言若鸣朋斌梁栋维启克伦翔旭鹏泽晨辰士以建家致树炎德"
     		+ "行时泰盛雄琛钧冠策腾楠榕风航弘";
+
+	private int mMinLength;
+	private int mMaxLength;
+
+	public ChinseNameFactory() {
+		this(2, 3);
+	}
+
+	public ChinseNameFactory(int minLength, int maxLength) {
+		mMinLength = minLength;
+		mMaxLength = maxLength;
+	}
 	
 	public static String createRandomName() {
 		return getChineseSurname() + getChineseName();
@@ -71,35 +83,55 @@ public class ChinseNameFactory implements IFactory{
 	
 	/**
 	 * 获取随机名
+	 * @param min 最小长度
+	 * @param max 最大长度
 	 * */
-	/*private static String getChineseName() {  
-        String str = null;  
-        int highPos, lowPos;  
-        Random random = new Random();  
-        highPos = (176 + Math.abs(random.nextInt(71)));//区码，0xA0打头，从第16区开始，即0xB0=11*16=176,16~55一级汉字，56~87二级汉字  
-        random=new Random();  
-        lowPos = 161 + Math.abs(random.nextInt(94));//位码，0xA0打头，范围第1~94列  
-  
-        byte[] bArr = new byte[2];  
-        bArr[0] = (new Integer(highPos)).byteValue();  
-        bArr[1] = (new Integer(lowPos)).byteValue();  
-        try {  
-            str = new String(bArr, "GB2312");   //区位码组合成汉字  
-        } catch (UnsupportedEncodingException e) {  
-            e.printStackTrace();  
-        }  
-        
-        return str;  
-    }*/
+	private static String getChineseName(int min, int max) {
+		if (max < 1) {
+			return "";
+		}
+
+		if (min<1) {
+			min =1;
+		}
+
+		if(min>=2 && max <=4) {
+			return getChineseSurname() + getChineseName();
+		}
+
+		int nameLength = min + (int)((max-min+1)*Math.random());
+
+		StringBuffer sb = new StringBuffer();
+		for(int i=0; i<nameLength; i++) {
+			String str = null;
+			int highPos, lowPos;
+			Random random = new Random();
+			highPos = (176 + Math.abs(random.nextInt(71)));//区码，0xA0打头，从第16区开始，即0xB0=11*16=176,16~55一级汉字，56~87二级汉字
+			random = new Random();
+			lowPos = 161 + Math.abs(random.nextInt(94));//位码，0xA0打头，范围第1~94列
+
+			byte[] bArr = new byte[2];
+			bArr[0] = (new Integer(highPos)).byteValue();
+			bArr[1] = (new Integer(lowPos)).byteValue();
+			try {
+				str = new String(bArr, "GB2312");   //区位码组合成汉字
+
+				sb.append(str);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
+        return sb.toString();
+    }
 
 	@Override
 	public String createFirstRandomData() {
-		return createRandomName();
+		return getChineseName(mMinLength, mMaxLength);
 	}
 
 	@Override
-	public String[] createFirstRandomData(int count, boolean repeatAllowed) {
-		return null;
+	public String[] createFirstRandomData(boolean repeatAllowed) {
+		return new String[] {createFirstRandomData()};
 	}
 
 	@Override

@@ -80,6 +80,18 @@ public class OrganizationFactory implements IFactory{
 			"Production Manager", "Telecommunications Manager", "Assistant Store Manager", "Developmental Engineer", "Telemarketer", "Computer Operator  Product Support Manager",
 			"Advertising Manager", "Sales Executive", "MIS Manager", "Project Manager", "Employer Relations Representative", "HMO Product Manager"
 	};
+
+	private int mMinCount;
+	private int mMaxCount;
+
+	public OrganizationFactory() {
+		this(1, 1);
+	}
+
+	public OrganizationFactory(int minCount, int maxCount) {
+		mMinCount = minCount;
+		mMaxCount = maxCount;
+	}
 	
 	public static String creatRandomOrganization() {
 		int index = (int)(Math.random() * sSample.length);
@@ -99,7 +111,7 @@ public class OrganizationFactory implements IFactory{
 	public String createFirstRandomData() {
 		return creatRandomOrganization();
 	}
-	
+
 	public String[] createRandomOrg(int count, boolean allowRepeat) {
 		String[] orgs = new String[count];
 		
@@ -122,7 +134,8 @@ public class OrganizationFactory implements IFactory{
 	}
 
 	@Override
-	public String[] createFirstRandomData(int count, boolean repeatAllowed) {
+	public String[] createFirstRandomData(boolean repeatAllowed) {
+		int count = mMinCount + (int)((mMaxCount - mMinCount + 1)*Math.random());
 		return createRandomOrg(count, repeatAllowed);
 	}
 

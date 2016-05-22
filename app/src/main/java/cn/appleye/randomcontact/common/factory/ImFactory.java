@@ -1,9 +1,21 @@
 package cn.appleye.randomcontact.common.factory;
 
 public class ImFactory implements IFactory{
+
+	private int mMinCount;
+	private int mMaxCount;
+
+	public ImFactory() {
+		this(1, 1);
+	}
+
+	public ImFactory(int minCount, int maxCount) {
+		mMinCount = minCount;
+		mMaxCount = maxCount;
+	}
 	
 	public static final String createRandomIm() {
-		int bitCount = (int)(Math.random()*5) + 5;
+		int bitCount = (int)(Math.random()*5) + 6;
 		
 		String Im = "";
 		for (int i=0; i<bitCount; i++) {
@@ -44,13 +56,13 @@ public class ImFactory implements IFactory{
 	}
 
 	@Override
-	public String[] createFirstRandomData(int count, boolean repeatAllowed) {
+	public String[] createFirstRandomData(boolean repeatAllowed) {
+		int count = mMinCount + (int)((mMaxCount - mMinCount + 1)*Math.random());
 		return createRandomPostals(count, repeatAllowed);
 	}
 
 	@Override
 	public String createSecondRandomData() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

@@ -120,10 +120,10 @@ public class RandomActivity extends AppCompatActivity{
 
     public void exit() {
         int postion = mViewPagerTabs.getTabPositionSelected();
-        if (postion != TabState.CONTACTS) {
-            if (postion == TabState.GENERATE) {
+        if (postion != TabState.GENERATE) {
+            if (postion == TabState.CONTACTS) {
                 if (mGenerateFragement.onBackPressed()) {
-                    mTabPager.setCurrentItem(TabState.CONTACTS);
+                    mTabPager.setCurrentItem(TabState.GENERATE);
                 }
             }
         } else {

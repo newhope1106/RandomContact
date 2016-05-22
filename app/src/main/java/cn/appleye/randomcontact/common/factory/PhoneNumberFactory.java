@@ -10,7 +10,18 @@ public class PhoneNumberFactory implements IFactory{
 	
 	//电信
 	private static String[] sTelecom = new String[]{"133" ,"153", "180", "189"};
-	
+
+	private int mMinCount;
+	private int mMaxCount;
+
+	public PhoneNumberFactory() {
+		this(1, 1);
+	}
+
+	public PhoneNumberFactory(int minCount, int maxCount) {
+		mMinCount = minCount;
+		mMaxCount = maxCount;
+	}
 	
 	public static String createOneRandomPhoneNumber(){
 		int carrieroperator = (int)(Math.random()*3);
@@ -70,7 +81,8 @@ public class PhoneNumberFactory implements IFactory{
 	}
 
 	@Override
-	public String[] createFirstRandomData(int count, boolean repeatAllowed) {
+	public String[] createFirstRandomData(boolean repeatAllowed) {
+		int count = mMinCount + (int)((mMaxCount - mMinCount + 1)*Math.random());
 		return createRandomNumbers(count, repeatAllowed);
 	}
 

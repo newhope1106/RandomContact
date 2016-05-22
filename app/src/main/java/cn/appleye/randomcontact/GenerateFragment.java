@@ -132,12 +132,16 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
 
         value = pref.getBoolean(SettingsUtils.PRE_KEY_DISPLAY_NAME, true);
         if (value) {
-            baseContactType.addDataKindStructuredName();
+            int minLength = pref.getInt(SettingsUtils.PER_KEY_DISPLAY_NAME_MIN_LENGTH, 3);
+            int maxLength = pref.getInt(SettingsUtils.PER_KEY_DISPLAY_NAME_MAX_LENGTH, 3);
+            baseContactType.addDataKindStructuredName(minLength, maxLength);
         }
 
         value = pref.getBoolean(SettingsUtils.PRE_KEY_PNONE_NUMBER, true);
         if (value) {
-            baseContactType.addDataKindPhone(mIsMultiNumberAllowed?3:1);
+            int minCount = pref.getInt(SettingsUtils.PRE_KEY_PHNONE_NUMBER_MIN_COUNT, 1);
+            int maxCount = pref.getInt(SettingsUtils.PRE_KEY_PHNONE_NUMBER_MAX_COUNT, 1);
+            baseContactType.addDataKindPhone(minCount, maxCount);
         }
 
         value = pref.getBoolean(SettingsUtils.PRE_KEY_PHOTO, false);
@@ -147,17 +151,23 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
 
         value = pref.getBoolean(SettingsUtils.PRE_KEY_EVENT, false);
         if (value) {
-            baseContactType.addDataKindEvent();
+            int minCount = pref.getInt(SettingsUtils.PRE_KEY_EVENT_MIN_COUNT, 1);
+            int maxCount = pref.getInt(SettingsUtils.PRE_KEY_EVENT_MAX_COUNT, 1);
+            baseContactType.addDataKindEvent(minCount, maxCount);
         }
 
         value = pref.getBoolean(SettingsUtils.PRE_KEY_EMAIL, false);
         if (value) {
-            baseContactType.addDataKindEmail();
+            int minCount = pref.getInt(SettingsUtils.PRE_KEY_EMAIL_MIN_COUNT, 1);
+            int maxCount = pref.getInt(SettingsUtils.PRE_KEY_EMAIL_MAX_COUNT, 1);
+            baseContactType.addDataKindEmail(minCount, maxCount);
         }
 
         value = pref.getBoolean(SettingsUtils.PRE_KEY_IM, false);
         if (value) {
-            baseContactType.addDataKindIm();
+            int minCount = pref.getInt(SettingsUtils.PRE_KEY_IM_MIN_COUNT, 1);
+            int maxCount = pref.getInt(SettingsUtils.PRE_KEY_IM_MAX_COUNT, 1);
+            baseContactType.addDataKindIm(minCount, maxCount);
         }
 
         value = pref.getBoolean(SettingsUtils.PRE_KEY_NICK_NAME, false);
@@ -172,17 +182,23 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
 
         value = pref.getBoolean(SettingsUtils.PRE_KEY_ORG, false);
         if (value) {
-            baseContactType.addDataKindOrganization();
+            int minCount = pref.getInt(SettingsUtils.PRE_KEY_ORG_MIN_COUNT, 1);
+            int maxCount = pref.getInt(SettingsUtils.PRE_KEY_ORG_MAX_COUNT, 1);
+            baseContactType.addDataKindOrganization(minCount, maxCount);
         }
 
         value = pref.getBoolean(SettingsUtils.PRE_KEY_WEBSITE, false);
         if (value) {
-            baseContactType.addDataKindWebsite();
+            int minCount = pref.getInt(SettingsUtils.PRE_KEY_WEBSITE_MIN_COUNT, 1);
+            int maxCount = pref.getInt(SettingsUtils.PRE_KEY_WEBSITE_MAX_COUNT, 1);
+            baseContactType.addDataKindWebsite(minCount, maxCount);
         }
 
         value = pref.getBoolean(SettingsUtils.PRE_KEY_POSTAL, false);
         if (value) {
-            baseContactType.addDataKindStructuredPostal();
+            int minCount = pref.getInt(SettingsUtils.PRE_KEY_POSTAL_MIN_COUNT, 1);
+            int maxCount = pref.getInt(SettingsUtils.PRE_KEY_POSTAL_MAX_COUNT, 1);
+            baseContactType.addDataKindStructuredPostal(minCount, maxCount);
         }
 
         return baseContactType;
@@ -213,7 +229,8 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
                     ArrayList<ContentProviderOperation> operationList = new ArrayList<ContentProviderOperation>();
                     ArrayList<ContentProviderOperation> perOperationList = null;
 
-                    if (mIsSameContactRepeat) {//只生成完全相同联系人
+                    //只生成完全相同联系人
+                    if (mIsSameContactRepeat) {
                         ArrayList<Long> rawContactIds = new ArrayList<Long>();
                         int realCount = 0;
                         for (int i=0; i< count; i++) {

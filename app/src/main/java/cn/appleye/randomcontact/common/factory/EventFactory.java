@@ -6,6 +6,18 @@ public class EventFactory implements IFactory{
 	private static Calendar sCalendar = Calendar.getInstance();
 	
 	private static int sNonLeapYearDays[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+	private int mMinCount;
+	private int mMaxCount;
+
+	public EventFactory() {
+		this(1, 1);
+	}
+
+	public EventFactory(int minCount, int maxCount) {
+		mMinCount = minCount;
+		mMaxCount = maxCount;
+	}
 	
 	public static int getRandomYear() {
 		int section = sCalendar.get(Calendar.YEAR) - 1980;
@@ -51,7 +63,9 @@ public class EventFactory implements IFactory{
 	}
 
 	@Override
-	public String[] createFirstRandomData(int count, boolean repeatAllowed) {
+	public String[] createFirstRandomData(boolean repeatAllowed) {
+		int count = mMinCount + (int)((mMaxCount - mMinCount + 1)*Math.random());
+
 		String[] dates = new String[count];
 		
 		for(int i=0; i<count; i++) {
@@ -74,7 +88,6 @@ public class EventFactory implements IFactory{
 
 	@Override
 	public String createSecondRandomData() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

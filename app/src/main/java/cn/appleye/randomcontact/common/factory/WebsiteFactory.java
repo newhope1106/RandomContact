@@ -8,6 +8,18 @@ public class WebsiteFactory implements IFactory{
 			"www.msn.com", "www.163.net", "www.ask.com", "www.aol.com", "www.263.net", "www.3721.net",
 			"www.yeah.net", "www.live.com.cn"
 	};
+
+	private int mMinCount;
+	private int mMaxCount;
+
+	public WebsiteFactory() {
+		this(1, 1);
+	}
+
+	public WebsiteFactory(int minCount, int maxCount) {
+		mMinCount = minCount;
+		mMaxCount = maxCount;
+	}
 	
 	public static String createRandomWebsite() {
 		int index = (int)(Math.random() * sSample.length);
@@ -43,7 +55,8 @@ public class WebsiteFactory implements IFactory{
 	}
 
 	@Override
-	public String[] createFirstRandomData(int count, boolean repeatAllowed) {
+	public String[] createFirstRandomData(boolean repeatAllowed) {
+		int count = mMinCount + (int)((mMaxCount - mMinCount + 1)*Math.random());
 		return createRandomPostals(count, repeatAllowed);
 	}
 

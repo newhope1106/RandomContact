@@ -133,6 +133,18 @@ public class StructuredPostalFactory implements IFactory{
 			"人和路","郭口大厦","营口路","昌邑街","孟庄广场","丰盛街","埕口路","丹阳街","汉口路","洮南大厦","桑梓路","沾化街","山口路","沈阳街","南口广场","振兴街","通化路",
 			"福寺大厦","峄县路","寿光广场","曹县路","昌乐街","道口路","南九水街","台湛广场","东光大厦","驼峰路","太平山","标山路","云溪广场","太清路"
 	};
+
+	private int mMinCount;
+	private int mMaxCount;
+
+	public StructuredPostalFactory() {
+		this(1, 1);
+	}
+
+	public StructuredPostalFactory(int minCount, int maxCount) {
+		mMinCount = minCount;
+		mMaxCount = maxCount;
+	}
 	
 	public static int getRandomNumber() {
 		return 100 + (int)(Math.random()*100);
@@ -175,7 +187,8 @@ public class StructuredPostalFactory implements IFactory{
 	}
 
 	@Override
-	public String[] createFirstRandomData(int count, boolean repeatAllowed) {
+	public String[] createFirstRandomData(boolean repeatAllowed) {
+		int count = mMinCount + (int)((mMaxCount - mMinCount + 1)*Math.random());
 		return createRandomPostals(count, repeatAllowed);
 	}
 

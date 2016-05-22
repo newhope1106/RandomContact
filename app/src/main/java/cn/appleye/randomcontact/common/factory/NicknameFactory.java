@@ -39,7 +39,7 @@ public class NicknameFactory implements IFactory{
 	}
 
 	@Override
-	public String[] createFirstRandomData(int count, boolean repeatAllowed) {
+	public String[] createFirstRandomData(boolean repeatAllowed) {
 		// TODO Auto-generated method stub
 		return null;
 	}

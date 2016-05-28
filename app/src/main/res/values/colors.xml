@@ -6,11 +6,11 @@
     
     <color name="list_item_pressed_bg">#55CCC6</color>
 
-    <color name="tab_accent_color">#ffffff</color>
+    <color name="tab_accent_color">#60c7d0</color>
     <color name="tab_selected_underline_color">@color/tab_accent_color</color>
     <color name="tab_ripple_color">@color/tab_accent_color</color>
 
-    <color name="actionbar_background_color">#0fc6dc</color>
+    <color name="actionbar_background_color">#eef1f8</color>
     <!-- Color of the title to the Frequently Contacted section -->
     <color name="frequently_contacted_title_color">@color/actionbar_background_color</color>
 </resources>

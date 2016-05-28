@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 public class CheckableTextView extends TextView{
-	private int mNormalColor = 0xffecf0f1;
+	private int mNormalColor = 0xffe0eef1;
 	
 	private boolean mIsChecked = false;
 	private Context mContext;

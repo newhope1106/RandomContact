@@ -134,9 +134,9 @@ public class ClearEditText extends EditText implements
         paint.setStyle(Style.STROKE);
         paint.setStrokeWidth(2);
         if(this.isFocused() == true){
-            paint.setColor(Color.rgb(0,173,173));
+            paint.setColor(Color.rgb(99,197,208));
         }else{
-            paint.setColor(Color.parseColor("#95A5A6"));
+            paint.setColor(Color.parseColor("#5aafef"));
         }
 
         canvas.drawRoundRect(new RectF(2+this.getScrollX(), 2+this.getScrollY(), this.getWidth()-3+this.getScrollX(), this.getHeight()+ this.getScrollY()-1), 3,3, paint);

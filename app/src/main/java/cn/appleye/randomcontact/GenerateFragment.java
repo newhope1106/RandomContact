@@ -36,7 +36,6 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
     private Button mResetBtn;
     private Button mOKBtn;
 
-    private boolean mIsMultiNumberAllowed = false;
     private boolean mIsSameContactRepeat = false;
 
     private ProgressDialogEx mLoadingDialog = null;

@@ -111,6 +111,7 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
                     (int)getResources().getDimension(R.dimen.list_header_padding_top),
                     0, (int)getResources().getDimension(R.dimen.list_header_padding_top));
             mListHeaderView.setBackgroundColor(0xffffffff);
+            mListHeaderView.setTextColor(0xFFFFB200);
 
             mListView.addHeaderView(mListHeaderView);
         }

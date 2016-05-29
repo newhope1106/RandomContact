@@ -10,4 +10,6 @@
 
     <dimen name="list_header_padding_left">8dip</dimen>
     <dimen name="list_header_padding_top">8dip</dimen>
+
+    <dimen name="divider_height">2dip</dimen>
 </resources>

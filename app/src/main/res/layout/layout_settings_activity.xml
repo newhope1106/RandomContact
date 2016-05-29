@@ -7,8 +7,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="24sp"
-        android:background="#EEEEEE"
+        android:textSize="18sp"
+        android:background="#eef1f8"
+        android:textStyle="bold"
+        android:textColor="#ff707d92"
         android:paddingTop="10dip"
         android:paddingBottom="10dip"
         android:text="@string/settings_title" />

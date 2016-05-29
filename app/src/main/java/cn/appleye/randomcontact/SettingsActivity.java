@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -88,6 +89,7 @@ public class SettingsActivity extends Activity{
                 SettingsListItemView checkableTextView;
                 if (convertView == null) {
                     checkableTextView = (SettingsListItemView)mInflater.inflate(R.layout.setting_list_item_view, null);
+                    checkableTextView.setTextColor(0xFF627D9B);
                 } else {
                     checkableTextView = (SettingsListItemView)convertView;
                 }
@@ -102,6 +104,8 @@ public class SettingsActivity extends Activity{
         };
 
         mListView.setAdapter(mAdapter);
+        mListView.setDivider(new ColorDrawable(0xfff6f9fe));
+        mListView.setDividerHeight((int)getResources().getDimension(R.dimen.divider_height));
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

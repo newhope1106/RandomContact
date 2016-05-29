@@ -9,4 +9,4 @@
     android:paddingBottom="8dip"
     android:textSize="18sp"
     android:textColor="@color/list_item_text_color"
-    android:background="@drawable/bg_item"/>
+    android:background="@drawable/settings_list_item_bg"/>

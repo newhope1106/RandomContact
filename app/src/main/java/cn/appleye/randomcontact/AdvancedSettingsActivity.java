@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -40,6 +41,8 @@ public class AdvancedSettingsActivity extends Activity {
         mInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         mListView = (ListView) findViewById(R.id.advanced_settings_list);
+        mListView.setDivider(new ColorDrawable(0xfff6f9fe));
+        mListView.setDividerHeight((int)getResources().getDimension(R.dimen.divider_height));
 
         initPreference();
         setupListView();

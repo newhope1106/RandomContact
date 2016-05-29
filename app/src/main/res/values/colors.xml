@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     
     <color name="list_item_pressed_bg">#e1e1e1</color>
+    <color name="settings_list_item_pressed">#FFF6F9FE</color>
 
     <color name="tab_accent_color">#60c7d0</color>
     <color name="tab_selected_underline_color">@color/tab_accent_color</color>

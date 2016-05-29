@@ -169,7 +169,7 @@ public class ViewPagerTabs extends HorizontalScrollView implements ViewPager.OnP
             textView.setAllCaps(mTextAllCaps);
             textView.setGravity(Gravity.CENTER);
             textView.getPaint().setFakeBoldText(true);
-            textView.setTextSize(getContext().getResources().getDimension(R.dimen.tab_text_size));
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
 
             tabView = textView;
         }

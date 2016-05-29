@@ -64,4 +64,6 @@
     <string name="label_web_site">web site</string>
 
     <string name="circle_seek_dialog_title">Value Set</string>
+    
+    <string name="number_of_contacts">the number of contacts is %1$d</string>
 </resources>

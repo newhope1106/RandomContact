@@ -10,12 +10,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import cn.appleye.randomcontact.common.ListAdapter;
 
@@ -28,6 +30,8 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
     private ListAdapter mAdapter;
     private View mCreateContactsView;
     private View mContainerView;
+
+    private TextView mListHeaderView;
 
     private String mLastQueryString = "";
     private static final int LOADER_ID = 1;
@@ -49,6 +53,7 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
         View rootView = getView();
 
         mSearchView = (EditText)rootView.findViewById(R.id.search_view);
+        mSearchView.setBackgroundColor(0xffffffff);
 
         mAdapter = new ListAdapter(getActivity());
         mListView = (ListView)rootView.findViewById(R.id.list_view);
@@ -94,6 +99,21 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
                 }
             }
         });
+
+        addHeaderView();
+    }
+
+    private void addHeaderView() {
+        if (mListHeaderView == null) {
+            mListHeaderView = new TextView(getActivity());
+            mListHeaderView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            mListHeaderView.setPadding((int)getResources().getDimension(R.dimen.list_header_padding_left),
+                    (int)getResources().getDimension(R.dimen.list_header_padding_top),
+                    0, (int)getResources().getDimension(R.dimen.list_header_padding_top));
+            mListHeaderView.setBackgroundColor(0xffffffff);
+
+            mListView.addHeaderView(mListHeaderView);
+        }
     }
 
     private void startLoading() {
@@ -132,6 +152,15 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
             mContainerView.setVisibility(View.GONE);
         } else {
             mContainerView.setVisibility(View.VISIBLE);
+        }
+
+        if (mListHeaderView != null) {
+            if (data ==null || data.getCount() == 0) {
+                mListHeaderView.setVisibility(View.GONE);
+            } else {
+                String numberOfContacts = String.format(getString(R.string.number_of_contacts), data.getCount());
+                mListHeaderView.setText(numberOfContacts);
+            }
         }
     }
 

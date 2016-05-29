@@ -8,5 +8,6 @@
     <dimen name="tab_selected_underline_height">2dp</dimen>
     <dimen name="seek_bar_thumb_size">10dip</dimen>
 
-    <dimen name="tab_text_size">6sp</dimen>
+    <dimen name="list_header_padding_left">8dip</dimen>
+    <dimen name="list_header_padding_top">8dip</dimen>
 </resources>

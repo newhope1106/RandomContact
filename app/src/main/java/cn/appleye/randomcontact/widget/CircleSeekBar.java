@@ -119,6 +119,7 @@ public class CircleSeekBar extends View {
         mProgressTextPaint.setAntiAlias(true);
         mProgressTextPaint.setStrokeWidth(progressTextStroke);
         mProgressTextPaint.setTextSize(mProgressTextSize);
+        mProgressTextPaint.setFakeBoldText(true);
 
         localTypedArray.recycle();
     }

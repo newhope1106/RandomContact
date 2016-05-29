@@ -11,7 +11,8 @@
         android:paddingTop="4dip"
         android:paddingRight="8dip"
         android:paddingBottom="4dip"
-        android:background="#EBEBEB"
+        android:background="#eef1f8"
+        android:text="#707d92"
         android:textSize="14sp"
         android:visibility="gone" />
     <TextView
@@ -36,4 +37,9 @@
         android:textSize="20sp"
         android:textColor="@color/list_item_text_color"
         android:background="@drawable/bg_item"/>
+    <TextView
+        android:id="@+id/item_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f6f9fe" />
 </LinearLayout>

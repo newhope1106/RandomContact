@@ -192,6 +192,23 @@ public class ListAdapter extends BaseAdapter{
 		return contactId;
 	}
 
+	private boolean isLastInSection(int position) {
+		if (position < 0 || position >= mCursor.getCount()-1) {
+			return true;
+		}
+
+		if (mPositions != null) {
+			int length = mPositions.length;
+			for (int i=0; i<length; i++) {
+				if(position == mPositions[i] - 1) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
@@ -211,6 +228,13 @@ public class ListAdapter extends BaseAdapter{
 		} else {
 			TextView snippetView = (TextView)convertView.findViewById(R.id.snippet_view);
 			snippetView.setVisibility(View.GONE);
+		}
+
+		View dividerView = convertView.findViewById(R.id.item_divider);
+		if (isLastInSection(position)) {
+			dividerView.setVisibility(View.GONE);
+		} else {
+			dividerView.setVisibility(View.VISIBLE);
 		}
 		
 		return convertView;

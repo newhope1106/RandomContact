@@ -19,7 +19,7 @@ import cn.appleye.randomcontact.R;
  */
 public class CircleSeekBar extends View {
 
-    private final boolean DEBUG = true;
+    private final boolean DEBUG = false;
     private final String TAG = "CircleSeekBar";
 
     private Context mContext = null;
@@ -52,10 +52,16 @@ public class CircleSeekBar extends View {
     private float mSeekBarDegree = 0;
     private int mCurrentProgress = 0;
 
+    private final int mSeekbarWidthPref;
+    private final int mSeekbarHeightPref;
+
     public CircleSeekBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
         mAttrs = attrs;
+
+        mSeekbarWidthPref = context.getResources().getDimensionPixelOffset(R.dimen.seek_bar_width);
+        mSeekbarHeightPref = context.getResources().getDimensionPixelOffset(R.dimen.seek_bar_height);
         initView();
     }
 
@@ -63,12 +69,18 @@ public class CircleSeekBar extends View {
         super(context, attrs);
         mContext = context;
         mAttrs = attrs;
+
+        mSeekbarWidthPref = context.getResources().getDimensionPixelOffset(R.dimen.seek_bar_width);
+        mSeekbarHeightPref = context.getResources().getDimensionPixelOffset(R.dimen.seek_bar_height);
         initView();
     }
 
     public CircleSeekBar(Context context) {
         super(context);
         mContext = context;
+
+        mSeekbarWidthPref = context.getResources().getDimensionPixelOffset(R.dimen.seek_bar_width);
+        mSeekbarHeightPref = context.getResources().getDimensionPixelOffset(R.dimen.seek_bar_height);
         initView();
     }
 
@@ -128,8 +140,8 @@ public class CircleSeekBar extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if(DEBUG) Log.d(TAG, "onMeasure");
-        mViewWidth = getWidth();
-        mViewHeight = getHeight();
+        mViewWidth = Math.max(getWidth(), mSeekbarWidthPref);
+        mViewHeight = Math.max(getHeight(), mSeekbarHeightPref);
 
         mSeekBarSize = mViewWidth > mViewHeight ? mViewHeight : mViewWidth;
 

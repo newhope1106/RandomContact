@@ -3,7 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    
+
+    <color name="menu_item_pressed_normal">#FFEEF1F8</color>
+    <color name="menu_item_pressed_pressed">#FFF6F9FE</color>
+
     <color name="list_item_pressed_bg">#e1e1e1</color>
     <color name="settings_list_item_pressed">#FFF6F9FE</color>
 

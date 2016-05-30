@@ -11,6 +11,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 //import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,8 +20,9 @@ import android.widget.Toast;
 
 import cn.appleye.randomcontact.common.list.TabState;
 import cn.appleye.randomcontact.common.list.ViewPagerTabs;
+import cn.appleye.randomcontact.widget.MenuPopupWindow;
 
-public class RandomActivity extends AppCompatActivity{
+public class RandomActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ViewPagerTabs mViewPagerTabs;
     private String[] mTabTitles;
@@ -30,6 +32,8 @@ public class RandomActivity extends AppCompatActivity{
 
     private ContactsFragment mContactsFragment;
     private GenerateFragment mGenerateFragement;
+
+    private MenuPopupWindow mMenuPopup;
 
     /* 两次返回键之间的间隔 */
     private long exitTime = 0;
@@ -86,8 +90,17 @@ public class RandomActivity extends AppCompatActivity{
     @Override
      public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_random, menu);
-        return true;
+        //getMenuInflater().inflate(R.menu.menu_random, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu){
+        mMenuPopup = new MenuPopupWindow(this, this);
+        mMenuPopup.showAtLocation(findViewById(R.id.content),
+                Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+
+        return false;
     }
 
     @Override
@@ -111,11 +124,40 @@ public class RandomActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.menu_basic_settings:{
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                break;
+            }
+
+            case R.id.menu_advanced_settings:{
+                Intent intent = new Intent(this, AdvancedSettingsActivity.class);
+                startActivity(intent);
+                break;
+            }
+        }
+    }
+
     /**
      * 连续两个返回键退出
      * */
     public void onBackPressed() {
+        if (mMenuPopup!= null && mMenuPopup.isShowing()) {
+            mMenuPopup.dismiss();
+            return;
+        }
+
         exit();
+    }
+
+    public void onPause() {
+        super.onPause();
+        if (mMenuPopup!= null && mMenuPopup.isShowing()) {
+            mMenuPopup.dismiss();
+        }
     }
 
     public void exit() {
@@ -138,7 +180,6 @@ public class RandomActivity extends AppCompatActivity{
             }
         }
     }
-
 
     private class TabPagerAdapter extends PagerAdapter {
         private final FragmentManager mFragmentManager;

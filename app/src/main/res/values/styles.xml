@@ -24,4 +24,9 @@
         <item name="android:windowIsFloating">true</item>
     </style>
 
+    <style name="MenuPopupAni" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/menu_popup_enter</item>
+        <item name="android:windowExitAnimation">@anim/menu_popup_exit</item>
+    </style>
+
 </resources>

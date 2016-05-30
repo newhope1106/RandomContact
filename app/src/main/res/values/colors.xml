@@ -17,4 +17,6 @@
     <color name="actionbar_background_color">#eef1f8</color>
     <!-- Color of the title to the Frequently Contacted section -->
     <color name="frequently_contacted_title_color">@color/actionbar_background_color</color>
+
+    <color name="seek_bar_thumb_bg_normal">#C0D7E9</color>
 </resources>

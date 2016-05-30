@@ -35,6 +35,7 @@ public class MenuPopupWindow extends PopupWindow{
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setFocusable(true);
         setOutsideTouchable(true);
+        setInputMethodMode(PopupWindow.INPUT_METHOD_NOT_NEEDED);
         setAnimationStyle(R.style.MenuPopupAni);
         ColorDrawable dw = new ColorDrawable(0x00000000);
         setBackgroundDrawable(dw);

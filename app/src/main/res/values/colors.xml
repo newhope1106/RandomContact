@@ -7,7 +7,7 @@
     <color name="menu_item_pressed_normal">#FFEEF1F8</color>
     <color name="menu_item_pressed_pressed">#FFF6F9FE</color>
 
-    <color name="list_item_pressed_bg">#e1e1e1</color>
+    <color name="list_item_pressed_bg">#FFF6F9FE</color>
     <color name="settings_list_item_pressed">#FFF6F9FE</color>
 
     <color name="tab_accent_color">#60c7d0</color>

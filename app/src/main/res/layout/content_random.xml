@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#FFFFFF"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="cn.appleye.randomcontact.RandomActivity"
     tools:showIn="@layout/activity_random">
@@ -43,7 +44,7 @@
             android:divider="@null"
             android:listSelector="@android:color/transparent" />
         <TextView
-            android:id="@+id/generate_contacts"
+            android:id="@+id/no_contacts_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

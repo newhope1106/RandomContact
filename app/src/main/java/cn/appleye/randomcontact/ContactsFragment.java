@@ -28,7 +28,7 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
     private EditText mSearchView;
     private ListView mListView;
     private ListAdapter mAdapter;
-    private View mCreateContactsView;
+    private View mNoContactsView;
     private View mContainerView;
 
     private TextView mListHeaderView;
@@ -57,9 +57,9 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
 
         mAdapter = new ListAdapter(getActivity());
         mListView = (ListView)rootView.findViewById(R.id.list_view);
-        mCreateContactsView = rootView.findViewById(R.id.generate_contacts);
+        mNoContactsView = rootView.findViewById(R.id.no_contacts_view);
         mContainerView = rootView.findViewById(R.id.container_view);
-        mListView.setEmptyView(mCreateContactsView);
+        mListView.setEmptyView(mNoContactsView);
 
         setupSearchView();
         setupListView();

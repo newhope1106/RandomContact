@@ -243,7 +243,7 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
                             }
                         }
 
-                        perOperationList = baseContactType.buildRepeatContentValues(rawContactIds, true);
+                        perOperationList = baseContactType.buildRepeatContentValues(rawContactIds, false);
 
                         int processedCount = 0, step = (int)(perOperationList.size()/realCount);
                         for (ContentProviderOperation operation : perOperationList) {
@@ -279,7 +279,7 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
                             Uri uri = ContactsContract.RawContacts.CONTENT_URI;
                             long rawContactId = ContentUris.parseId(mContext.getContentResolver().insert(uri, new ContentValues()));
 
-                            perOperationList = baseContactType.buildContentValues(mContext, rawContactId, true);
+                            perOperationList = baseContactType.buildContentValues(mContext, rawContactId, false);
 
                             if (operationList.size() + perOperationList.size() >= 500) {
                                 try{

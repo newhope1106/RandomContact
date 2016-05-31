@@ -161,6 +161,7 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
             } else {
                 String numberOfContacts = String.format(getString(R.string.number_of_contacts), data.getCount());
                 mListHeaderView.setText(numberOfContacts);
+                mListHeaderView.setVisibility(View.VISIBLE);
             }
         }
     }

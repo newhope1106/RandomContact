@@ -42,7 +42,7 @@ public class SettingsActivity extends Activity{
         mListView = (ListView) findViewById(R.id.settings_list);
 
         mInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        
         initPreference();
         setupListView();
     }

@@ -19,7 +19,7 @@ RandomContact
 #关于作者
 name : `newhope1106`<br />
 email : whucs1106@gmail.com（gmail暂时被封了）<br />
-email : `newhope1106@163.com`
+email : newhope1106@163.com
 
 #有问题反馈
 欢迎将自己的问题发送到有效邮箱，我将随时进行改进

@@ -3,7 +3,7 @@
    <!--默认背景-->  
     <item>  
         <shape>  
-            <solid android:color="#ffff0000" />  
+            <solid android:color="@color/seek_bar_thumb_bg_normal" />
             <corners android:radius="10dp" />  
         </shape>  
     </item>  

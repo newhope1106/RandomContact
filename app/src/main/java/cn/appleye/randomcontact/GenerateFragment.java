@@ -362,7 +362,6 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
     }
 
     public boolean onBackPressed() {
-        Toast.makeText(getActivity(), "aaaaa", Toast.LENGTH_SHORT).show();
         if (mLoadingDialog!=null && mLoadingDialog.isShowing()) {
             mCancel = true;
 

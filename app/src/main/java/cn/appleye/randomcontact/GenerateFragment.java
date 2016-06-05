@@ -5,6 +5,7 @@ import android.content.ContentProviderOperation;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -305,7 +307,7 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
                         }
                     }
 
-                    if (!mCancel && operationList.size() > 0) {
+                    if (operationList.size() > 0) {
                         try{
                             mContext.getContentResolver().applyBatch(ContactsContract.AUTHORITY, operationList);
                             operationList.clear();
@@ -334,6 +336,17 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
             mLoadingDialog.setTitle(R.string.loading_dialog_title);
             mLoadingDialog.setMessage(getString(R.string.loading_dialog_message));
             mLoadingDialog.setCancelable(false);
+            mLoadingDialog.setOnKeyListener( new DialogInterface.OnKeyListener(){
+
+                @Override
+                public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                    if (keyCode==KeyEvent.KEYCODE_BACK && event.getRepeatCount()==0){
+                        onBackPressed();
+                        return true;
+                    }
+                    return false;
+                }
+            });
             mLoadingDialog.setProgressStyle(ProgressDialogEx.STYLE_HORIZONTAL);
             mLoadingDialog.show();
 
@@ -349,6 +362,7 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
     }
 
     public boolean onBackPressed() {
+        Toast.makeText(getActivity(), "aaaaa", Toast.LENGTH_SHORT).show();
         if (mLoadingDialog!=null && mLoadingDialog.isShowing()) {
             mCancel = true;
 

@@ -348,9 +348,11 @@ public class GenerateFragment extends Fragment implements Handler.Callback {
                 }
             });
             mLoadingDialog.setProgressStyle(ProgressDialogEx.STYLE_HORIZONTAL);
+            mLoadingDialog.setProgress(0);
             mLoadingDialog.show();
 
         }else if(mLoadingDialog!=null && !mLoadingDialog.isShowing()){
+            mLoadingDialog.setProgress(0);
             mLoadingDialog.show();
         }
     }

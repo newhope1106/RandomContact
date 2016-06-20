@@ -1,16 +1,22 @@
 package cn.appleye.randomcontact;
 
+import android.Manifest;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+/*import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;*/
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 //import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Menu;
@@ -38,9 +44,53 @@ public class RandomActivity extends AppCompatActivity implements View.OnClickLis
     /* 两次返回键之间的间隔 */
     private long exitTime = 0;
 
+    private static final int CONTACTS_PERMISSION_GRANTED = 1;
+
+    private boolean mAllPermissionGranted = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
+                    != PackageManager.PERMISSION_GRANTED
+                    || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS,
+                        Manifest.permission.WRITE_CONTACTS}, CONTACTS_PERMISSION_GRANTED);
+            }else {
+                initContentView();
+            }
+        } else {
+            initContentView();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CONTACTS_PERMISSION_GRANTED) {
+            int length = grantResults.length;
+            if (length > 0) {
+                mAllPermissionGranted = true;
+                for (int i=0; i<length; i++) {
+                    if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                        mAllPermissionGranted = false;
+                        break;
+                    }
+                }
+                if (mAllPermissionGranted) {
+                    initContentView();
+                } else {
+                    Toast.makeText(this, getString(R.string.contacts_permission_request), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+
+    }
+
+    private void initContentView() {
         setContentView(R.layout.activity_random);
 
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -145,12 +195,17 @@ public class RandomActivity extends AppCompatActivity implements View.OnClickLis
      * 连续两个返回键退出
      * */
     public void onBackPressed() {
-        if (mMenuPopup!= null && mMenuPopup.isShowing()) {
-            mMenuPopup.dismiss();
-            return;
-        }
 
-        exit();
+        if (mAllPermissionGranted) {
+            if (mMenuPopup!= null && mMenuPopup.isShowing()) {
+                mMenuPopup.dismiss();
+                return;
+            }
+
+            exit();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     public void onPause() {

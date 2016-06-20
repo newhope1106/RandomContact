@@ -67,4 +67,6 @@
     <string name="circle_seek_dialog_title">设置值</string>
 
     <string name="number_of_contacts">联系人个数是%1$d</string>
+
+    <string name="contacts_permission_request">请授予读写联系人权限</string>
 </resources>

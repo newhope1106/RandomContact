@@ -16,6 +16,9 @@ RandomContact
 #使用中会遇到的问题
 如果无法生成联系人，该问题主要是由权限导致，可以查看是否有读写联系人权限
 
+#效果图
+![主列表](./screenshot/demo.gif)
+
 #关于作者
 name : `newhope1106`<br />
 email : whucs1106@gmail.com（gmail暂时被封了）<br />
